@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/motion/reveal";
+import { FaqSection } from "@/components/sections/faq-section";
 import { FinalCta } from "@/components/sections/final-cta";
 import { PageHeader } from "@/components/ui/page-header";
 import { audiences } from "@/content/company";
+import { solutionsFaqs } from "@/content/faqs";
 import { getService } from "@/content/services";
 
 export const metadata: Metadata = {
@@ -63,6 +65,8 @@ export default function SolutionsPage() {
           </Reveal>
         ))}
       </div>
+
+      <FaqSection faqs={solutionsFaqs} title="Working with us" />
 
       <FinalCta />
     </>

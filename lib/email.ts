@@ -1,16 +1,18 @@
 import { Resend } from "resend";
+import { serverEnv } from "@/lib/env.server";
 
-type Outgoing = { subject: string; text: string; replyTo?: string };
+type Outgoing = { to?: string; subject: string; text: string; replyTo?: string };
 
 export type SendResult = "sent" | "skipped" | "failed";
 
 // Plain text only, so visitor input can't inject markup into the email.
-export async function sendTeamEmail({ subject, text, replyTo }: Outgoing): Promise<SendResult> {
-  const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO_EMAIL;
-  const from = process.env.CONTACT_FROM_EMAIL;
+// Without a `to`, the email goes to the team inbox.
+export async function sendEmail({ to, subject, text, replyTo }: Outgoing): Promise<SendResult> {
+  const env = serverEnv();
+  const recipient = to ?? env.CONTACT_TO_EMAIL;
+  const from = env.CONTACT_FROM_EMAIL;
 
-  if (!apiKey || !to || !from) {
+  if (!env.RESEND_API_KEY || !recipient || !from) {
     // Lets the form be tested locally. Production must report the failure.
     if (process.env.NODE_ENV !== "production") return "skipped";
     console.error("Email is not configured: set the RESEND and CONTACT variables.");
@@ -18,7 +20,13 @@ export async function sendTeamEmail({ subject, text, replyTo }: Outgoing): Promi
   }
 
   try {
-    const { error } = await new Resend(apiKey).emails.send({ from, to, subject, text, replyTo });
+    const { error } = await new Resend(env.RESEND_API_KEY).emails.send({
+      from,
+      to: recipient,
+      subject,
+      text,
+      replyTo,
+    });
     if (error) {
       console.error("Resend rejected the email:", error.name);
       return "failed";
@@ -28,4 +36,8 @@ export async function sendTeamEmail({ subject, text, replyTo }: Outgoing): Promi
     console.error("Resend request failed.");
     return "failed";
   }
+}
+
+export function sendTeamEmail(message: Omit<Outgoing, "to">) {
+  return sendEmail(message);
 }

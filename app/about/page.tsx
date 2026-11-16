@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/motion/reveal";
+import { FaqSection } from "@/components/sections/faq-section";
 import { FinalCta } from "@/components/sections/final-cta";
 import { LeadershipSection } from "@/components/sections/leadership-section";
 import { CompanyDetails } from "@/components/ui/company-details";
 import { PageHeader } from "@/components/ui/page-header";
 import { values } from "@/content/company";
+import { aboutFaqs } from "@/content/faqs";
 import { services } from "@/content/services";
 import { site } from "@/lib/site";
 
@@ -113,6 +115,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <FaqSection faqs={aboutFaqs} title="About Faberon Group" />
 
       <FinalCta title="Talk to the people who'll build it" />
     </>
