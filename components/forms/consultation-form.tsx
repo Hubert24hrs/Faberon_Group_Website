@@ -7,7 +7,7 @@ import { useForm, type FieldError } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
-import { budgetOptions, contactSchema, serviceOptions, type ContactInput } from "@/lib/validators";
+import { budgetOptions, contactSchema, serviceGroups, type ContactInput } from "@/lib/validators";
 
 type Status = "idle" | "success" | "error" | "rate_limited";
 
@@ -146,8 +146,12 @@ export function ConsultationForm() {
           <option value="" disabled>
             Choose one
           </option>
-          {serviceOptions.map((option) => (
-            <option key={option}>{option}</option>
+          {serviceGroups.map((group) => (
+            <optgroup key={group.label} label={group.label}>
+              {group.options.map((option) => (
+                <option key={option}>{option}</option>
+              ))}
+            </optgroup>
           ))}
         </select>
       </Field>
