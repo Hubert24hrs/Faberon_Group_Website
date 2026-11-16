@@ -39,8 +39,7 @@ export const site: SiteConfig = {
   base: "Lagos, Nigeria",
   contact: {
     email: "info@faberongroups.com",
-    // TODO: add an active Nigerian number, e.g. "+234 800 000 0000". App store reviewers call it.
-    phone: null,
+    phone: "+234 703 028 8378",
     whatsapp: null,
     address: {
       street: "House 5, Gate 3, Zion Court Estate, Prince Samuel Adedoyin Street, Ikate",
