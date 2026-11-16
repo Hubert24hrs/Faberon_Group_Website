@@ -20,7 +20,7 @@ const flushBottom: ServiceSlug[] = ["custom-saas", "mobile-apps"];
 
 export function ServicesBento() {
   return (
-    <section className="py-section">
+    <section id="what-we-build" className="py-section">
       <div className="site-container">
         <Reveal>
           <SectionHeader

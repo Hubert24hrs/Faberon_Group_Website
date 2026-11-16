@@ -523,7 +523,9 @@ function paintCard(cv: HTMLCanvasElement, card: WarpCard, family: string) {
       const px = 208 - tw - 10;
       ctx.fillStyle = rgba(white, 0.1);
       ctx.beginPath();
-      ctx.roundRect(px, 25, tw + 10, 11, 3);
+      // roundRect is missing from older Safari; a square pill is fine there.
+      if (typeof ctx.roundRect === "function") ctx.roundRect(px, 25, tw + 10, 11, 3);
+      else ctx.rect(px, 25, tw + 10, 11);
       ctx.fill();
       ctx.fillStyle = rgba(white, 0.55);
       ctx.fillText(lab[0], px + 5, 32.5);

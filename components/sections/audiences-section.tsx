@@ -5,7 +5,7 @@ import { audiences } from "@/content/company";
 
 export function AudiencesSection() {
   return (
-    <section className="py-section">
+    <section id="who-we-build-for" className="py-section">
       <div className="site-container">
         <Reveal>
           <SectionHeader eyebrow="Who we build for" title="Different scale, same standard" />

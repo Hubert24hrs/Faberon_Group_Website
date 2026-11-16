@@ -110,7 +110,8 @@ export default function PrivacyPage() {
             Project records are kept for as long as our contracts and the law require.
           </p>
 
-          <h2>Deleting your account and data</h2>
+          {/* Linked from app store listings as the account deletion page: /privacy#delete-account */}
+          <h2 id="delete-account">Deleting your account and data</h2>
           <p>
             Where an app has accounts, you can delete your account from within the app. You can also
             ask us to delete your account and data by emailing {contactLink}. We&apos;ll confirm

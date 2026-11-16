@@ -38,6 +38,10 @@ export const metadata: Metadata = {
   },
   description: site.description,
   applicationName: site.name,
+  // Google Search Console ownership check, used by Google Play organisation verification.
+  ...(process.env.GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } }
+    : {}),
   openGraph: {
     type: "website",
     siteName: site.legalName,
@@ -52,6 +56,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
+  // Lets the background reach behind iPhone notches; content uses safe-area insets.
+  viewportFit: "cover",
   themeColor: [
     { media: "(prefers-color-scheme: dark)", color: "#0b0d11" },
     { media: "(prefers-color-scheme: light)", color: "#f6f7f9" },

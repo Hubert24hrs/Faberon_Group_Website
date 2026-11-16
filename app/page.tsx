@@ -8,7 +8,12 @@ import { PrinciplesSection } from "@/components/sections/principles-section";
 import { ProcessSection } from "@/components/sections/process-section";
 import { SelectedWork } from "@/components/sections/selected-work";
 import { ServicesBento } from "@/components/sections/services-bento";
+import type { Metadata } from "next";
 import { features } from "@/lib/site";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function HomePage() {
   return (

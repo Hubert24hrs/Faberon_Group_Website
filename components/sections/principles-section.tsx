@@ -4,7 +4,7 @@ import { principles } from "@/content/company";
 
 export function PrinciplesSection() {
   return (
-    <section className="border-t border-line py-section">
+    <section id="principles" className="border-t border-line py-section">
       <div className="site-container grid gap-10 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <Reveal className="lg:sticky lg:top-28">

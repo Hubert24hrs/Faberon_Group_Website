@@ -7,6 +7,7 @@ import { PageHeader } from "@/components/ui/page-header";
 import { audiences } from "@/content/company";
 import { solutionsFaqs } from "@/content/faqs";
 import { getService } from "@/content/services";
+import { anchorId } from "@/components/layout/site-nav";
 
 export const metadata: Metadata = {
   title: "Solutions",
@@ -28,11 +29,11 @@ export default function SolutionsPage() {
         {audiences.map((audience) => (
           <Reveal key={audience.name}>
             <section
-              aria-labelledby={audience.name}
+              aria-labelledby={anchorId(audience.name)}
               className="grid gap-8 border-t border-line py-12 first:border-t-0 first:pt-0 lg:grid-cols-12"
             >
               <div className="lg:col-span-5">
-                <h2 id={audience.name} className="text-h2">
+                <h2 id={anchorId(audience.name)} className="text-h2">
                   {audience.name}
                 </h2>
                 <p className="mt-3 text-lead text-muted">{audience.summary}</p>

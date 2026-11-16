@@ -142,7 +142,9 @@
     width: 100%;
     max-width: calc(var(--site-width) + var(--gutter) * 2);
     margin-inline: auto;
-    padding-inline: var(--gutter);
+    /* keeps content clear of iPhone notches in landscape */
+    padding-left: max(var(--gutter), env(safe-area-inset-left));
+    padding-right: max(var(--gutter), env(safe-area-inset-right));
   }
 
   .dot-grid {
@@ -201,6 +203,24 @@
   [data-theme="light"] .theme-icon-sun {
     display: none;
   }
+}
+
+/* The full menu slides in from the right. */
+@keyframes sheet-in {
+  from {
+    transform: translateX(100%);
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+.menu-sheet {
+  animation: sheet-in 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.menu-scrim {
+  animation: fade-in 0.25s ease both;
 }
 
 @keyframes marquee {

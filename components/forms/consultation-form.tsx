@@ -57,7 +57,7 @@ const statusMessages: Partial<Record<Status, string>> = {
 };
 
 const inputClass =
-  "mt-1.5 block w-full rounded-md border border-line-strong bg-surface px-3 py-2.5 text-[0.9375rem] text-ink transition-colors placeholder:text-subtle aria-[invalid=true]:border-danger";
+  "mt-1.5 block w-full rounded-md border border-line-strong bg-surface px-3 py-2.5 text-base text-ink transition-colors sm:text-[0.9375rem] placeholder:text-subtle aria-[invalid=true]:border-danger";
 
 function readSaved(key: string): Partial<ContactInput> | undefined {
   try {
