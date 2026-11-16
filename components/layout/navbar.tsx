@@ -7,7 +7,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { ButtonLink } from "@/components/ui/button";
 import { demoCta, primaryCta, site } from "@/lib/site";
-import { cn } from "@/lib/utils";
+import { backToTopIfCurrent, cn } from "@/lib/utils";
 import { Logo } from "./logo";
 import { activeSection, siteNav } from "./site-nav";
 import { SiteLiquidNav } from "./site-liquid-nav";
@@ -141,6 +141,7 @@ export function Navbar() {
         <Link
           href="/"
           aria-label={`${site.legalName} home`}
+          onClick={(event) => backToTopIfCurrent(event, "/")}
           className="-m-1 shrink-0 rounded p-1 text-ink"
         >
           <Logo />
@@ -218,7 +219,10 @@ export function Navbar() {
                           <div className="flex items-center gap-2">
                             <Link
                               href={section.href}
-                              onClick={closeMenu}
+                              onClick={(event) => {
+                                closeMenu();
+                                backToTopIfCurrent(event, section.href);
+                              }}
                               aria-current={isCurrent ? "page" : undefined}
                               className="group flex min-h-14 flex-1 items-center gap-3.5 py-2 text-lg font-medium text-ink"
                             >

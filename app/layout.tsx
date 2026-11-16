@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
+import { PageTransitions } from "@/components/layout/page-transitions";
 import { themeScript } from "@/components/layout/theme-toggle";
 import { Analytics } from "@/components/analytics/analytics";
 import { clientEnv } from "@/lib/env";
@@ -89,6 +90,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Navbar />
         <main id="main">{children}</main>
         <Footer />
+        <PageTransitions />
         <Analytics domain={clientEnv.NEXT_PUBLIC_PLAUSIBLE_DOMAIN} />
       </body>
     </html>

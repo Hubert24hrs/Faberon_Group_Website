@@ -222,6 +222,65 @@
   }
 }
 
+/* Liquid page transitions (components/layout/page-transitions.tsx).
+   The new page opens in a circle from the tap point; the header stays put. */
+::view-transition-old(root) {
+  animation: none;
+}
+::view-transition-new(root) {
+  animation: liquid-reveal 0.7s cubic-bezier(0.3, 0.7, 0.15, 1) both;
+}
+@keyframes liquid-reveal {
+  from {
+    clip-path: circle(0 at var(--liquid-x, 50%) var(--liquid-y, 50%));
+  }
+  to {
+    clip-path: circle(var(--liquid-r, 150vmax) at var(--liquid-x, 50%) var(--liquid-y, 50%));
+  }
+}
+.site-header {
+  view-transition-name: site-header;
+}
+::view-transition-group(site-header),
+::view-transition-old(site-header),
+::view-transition-new(site-header) {
+  animation-duration: 0s;
+}
+
+.liquid-ripple-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  overflow: hidden;
+  pointer-events: none;
+}
+.liquid-ripple {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  margin: -16px 0 0 -16px;
+  border-radius: 50%;
+  border: 1.5px solid color-mix(in oklab, var(--brand-gold) 65%, white);
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.35),
+    0 0 18px 1px color-mix(in oklab, var(--brand-gold) 30%, transparent);
+  opacity: 0;
+  transform: translate(var(--x), var(--y)) scale(0.2);
+  animation: liquid-ring 1s cubic-bezier(0.2, 0.6, 0.2, 1) both;
+}
+@keyframes liquid-ring {
+  0% {
+    opacity: 0.9;
+    transform: translate(var(--x), var(--y)) scale(0.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--x), var(--y)) scale(12);
+  }
+}
+
 /* The full menu slides in from the right. */
 @keyframes sheet-in {
   from {
@@ -273,5 +332,12 @@
 
   .marquee-track {
     animation: none !important;
+  }
+
+  .liquid-ripple {
+    display: none;
+  }
+  ::view-transition-new(root) {
+    animation: none;
   }
 }
