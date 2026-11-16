@@ -14,6 +14,7 @@
  */
 
 import Link from "next/link";
+import { backToTopIfCurrent } from "@/lib/utils";
 import * as React from "react";
 
 export type NimbusFx = "plane" | "drop" | "spin" | "glow" | "wave" | "pop" | "none";
@@ -661,7 +662,10 @@ export function LiquidNavbar({
           className: "nimbus-item",
           "aria-current": i === current ? ("page" as const) : undefined,
           "aria-label": item.label,
-          onClick: () => select(i),
+          onClick: (e: React.MouseEvent) => {
+            select(i);
+            if (item.href) backToTopIfCurrent(e, item.href);
+          },
           onPointerEnter: (e: React.PointerEvent) => {
             if (e.pointerType === "mouse") setHover(i);
           },
