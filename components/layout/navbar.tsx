@@ -172,6 +172,9 @@ export function Navbar() {
         </div>
       </div>
 
+      {/* Phones and tablets: the same liquid-glass navigation, on a second row of the menu bar. */}
+      <SiteLiquidNav scroll className="lg:hidden" />
+
       {/* Portalled to <body>: the header's backdrop blur would otherwise contain the fixed sheet. */}
       {menuOpen
         ? createPortal(
