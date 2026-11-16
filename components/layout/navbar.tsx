@@ -20,17 +20,65 @@ export function Navbar() {
   const pathname = usePathname();
   const current = activeSection(pathname);
   const [scrolled, setScrolled] = useState(false);
+  const [scrolledAway, setScrolledAway] = useState(false);
+  const [focusInside, setFocusInside] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [expanded, setExpanded] = useState<number>(-1);
   const sheetRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
+  // The menu closes when the route changes, however the navigation happened.
+  const [lastPath, setLastPath] = useState(pathname);
+  if (pathname !== lastPath) {
+    setLastPath(pathname);
+    setMenuOpen(false);
+  }
+
+  // Sticky header: hides while scrolling down, comes back on any scroll up.
+  // It moves with a transform, so nothing below it shifts.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
+    let lastY = window.scrollY;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const y = window.scrollY;
+      setScrolled(y > 8);
+      if (y < 160) {
+        setScrolledAway(false);
+        lastY = y;
+      } else if (Math.abs(y - lastY) > 8) {
+        setScrolledAway(y > lastY);
+        lastY = y;
+      }
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(frame);
+    };
   }, []);
+
+  // The menu is for small screens; widening the window to desktop closes it.
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const onChange = () => {
+      if (desktop.matches) setMenuOpen(false);
+    };
+    // Both, because some browsers and device emulators skip the media query event.
+    desktop.addEventListener("change", onChange);
+    window.addEventListener("resize", onChange);
+    return () => {
+      desktop.removeEventListener("change", onChange);
+      window.removeEventListener("resize", onChange);
+    };
+  }, []);
+
+  // Never hidden while the menu is open or a header control has keyboard focus.
+  const hidden = scrolledAway && !menuOpen && !focusInside;
 
   const openMenu = () => {
     // The menu opens compact, so every item and the buttons fit on a phone screen.
@@ -77,9 +125,16 @@ export function Navbar() {
 
   return (
     <header
+      data-scrolled={scrolled || undefined}
+      onFocus={() => setFocusInside(true)}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null))
+          setFocusInside(false);
+      }}
       className={cn(
-        "sticky top-0 z-40 border-b transition-colors",
+        "site-header sticky top-0 z-40 border-b transition-[transform,background-color,border-color] duration-300 ease-out",
         scrolled ? "border-line bg-[var(--nav-bg)] backdrop-blur-md" : "border-transparent",
+        hidden && "-translate-y-full",
       )}
     >
       <div className="site-container flex h-[var(--nav-height)] items-center justify-between gap-2 sm:gap-4">
@@ -91,9 +146,9 @@ export function Navbar() {
           <Logo />
         </Link>
 
-        {/* Top right: the liquid-glass navigation on wide screens, and the full menu on every screen. */}
+        {/* Desktop: the liquid-glass navigation and the call to action. Below lg: the call to action and the menu. */}
         <div className="flex min-w-0 items-center gap-1 sm:gap-2">
-          <SiteLiquidNav className="mr-1 hidden xl:block" />
+          <SiteLiquidNav className="mr-1 hidden lg:block" />
           <span className="max-sm:hidden">
             <ThemeToggle />
           </span>
@@ -110,7 +165,7 @@ export function Navbar() {
             aria-expanded={menuOpen}
             aria-controls="site-menu"
             onClick={openMenu}
-            className="inline-flex size-10 shrink-0 items-center justify-center rounded-full border border-line/80 bg-surface/60 text-ink backdrop-blur-md transition-colors hover:bg-surface-2"
+            className="inline-flex size-10 shrink-0 items-center justify-center rounded-full border border-line/80 bg-surface/60 text-ink transition-colors hover:bg-surface-2 lg:hidden"
           >
             <Menu className="size-5" strokeWidth={1.75} aria-hidden />
           </button>
@@ -120,7 +175,7 @@ export function Navbar() {
       {/* Portalled to <body>: the header's backdrop blur would otherwise contain the fixed sheet. */}
       {menuOpen
         ? createPortal(
-            <div className="fixed inset-0 z-50">
+            <div className="fixed inset-0 z-50 lg:hidden">
               <button
                 type="button"
                 tabIndex={-1}

@@ -205,6 +205,16 @@
   }
 }
 
+/* Browsers without backdrop-filter get a near-solid tint, so text keeps its contrast. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header[data-scrolled] {
+    background: color-mix(in oklab, var(--bg) 96%, transparent);
+  }
+  .menu-sheet {
+    background: var(--bg);
+  }
+}
+
 /* The full menu slides in from the right. */
 @keyframes sheet-in {
   from {

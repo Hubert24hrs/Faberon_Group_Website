@@ -36,6 +36,8 @@ export type LiquidNavbarProps = {
   tone?: "light" | "dark";
   /** Icons only. */
   compact?: boolean;
+  /** Text labels only, with tighter spacing, below 1280px wide. */
+  dense?: boolean;
   ariaLabel?: string;
   className?: string;
   style?: React.CSSProperties;
@@ -45,10 +47,10 @@ const PAD = 14; // canvas bleed around the pill, for shadows and ripples
 const IDLE_MS = 4000; // ambient water stops this long after the last interaction
 
 const NIMBUS_CSS = `
-.nimbus-nav{--n-tint:rgba(255,255,255,.55);--n-fg:#0e1116;--n-fg-soft:rgba(14,17,22,.62);--n-rim:rgba(255,255,255,.8);--n-edge:rgba(10,32,56,.1);
+.nimbus-nav{--n-tint:rgba(255,255,255,.55);--n-fg:#0e1116;--n-fg-soft:rgba(14,17,22,.62);--n-rim:rgba(255,255,255,.8);--n-edge:rgba(10,32,56,.1);--n-solid:rgba(250,251,252,.96);
   position:relative;display:inline-flex;align-items:center;gap:2px;padding:6px;border-radius:999px;isolation:isolate;
   font-family:var(--font-geist-sans),ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased;user-select:none;-webkit-tap-highlight-color:transparent}
-.nimbus-nav[data-tone="dark"]{--n-tint:rgba(18,21,27,.55);--n-fg:#eceef2;--n-fg-soft:rgba(236,238,242,.68);--n-rim:rgba(255,255,255,.3);--n-edge:rgba(255,255,255,.18)}
+.nimbus-nav[data-tone="dark"]{--n-tint:rgba(18,21,27,.55);--n-fg:#eceef2;--n-fg-soft:rgba(236,238,242,.68);--n-rim:rgba(255,255,255,.3);--n-edge:rgba(255,255,255,.18);--n-solid:rgba(22,25,32,.96)}
 .nimbus-glass{position:absolute;inset:0;border-radius:inherit;z-index:-2;overflow:hidden;background:var(--n-tint);
   -webkit-backdrop-filter:blur(14px) saturate(1.3) brightness(1.06);backdrop-filter:blur(14px) saturate(1.3) brightness(1.06);
   box-shadow:inset 0 1px 1px var(--n-rim),inset 0 0 0 1px var(--n-edge),0 12px 32px -14px rgba(0,20,50,.55),0 2px 6px rgba(0,20,50,.12)}
@@ -84,6 +86,9 @@ const NIMBUS_CSS = `
 .nimbus-nav[data-compact="true"] .nimbus-item{padding:0 13px}
 .nimbus-nav[data-compact="true"] .nimbus-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media (max-width:760px){.nimbus-nav:not([data-compact="false"]) .nimbus-item{padding:0 12px}.nimbus-nav:not([data-compact="false"]) .nimbus-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
+@media (max-width:1279px){.nimbus-nav[data-dense="true"] .nv-ico{display:none}.nimbus-nav[data-dense="true"] .nimbus-item{padding:0 12px}}
+/* Without backdrop-filter, a near-solid tint keeps labels readable over any background. */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.nimbus-glass{background:var(--n-solid)}}
 @media (prefers-reduced-motion:reduce){.nv-ico svg{animation:none!important;transition:none}}
 `;
 
@@ -239,6 +244,7 @@ export function LiquidNavbar({
   onChange,
   tone = "light",
   compact,
+  dense,
   ariaLabel = "Main",
   className,
   style,
@@ -538,6 +544,7 @@ export function LiquidNavbar({
     const el = iconRefs.current[i];
     if (!el) return null;
     const b = el.getBoundingClientRect();
+    if (b.width === 0) return null; // icon hidden in dense mode
     return local(b.left + b.width / 2, b.top + b.height / 2);
   };
 
@@ -582,6 +589,7 @@ export function LiquidNavbar({
       data-gl="on"
       data-none={shown < 0 || undefined}
       data-compact={compact === undefined ? undefined : String(compact)}
+      data-dense={dense || undefined}
       data-refract={refract ? "on" : "off"}
       aria-label={ariaLabel}
       onKeyDown={onKeyDown}
