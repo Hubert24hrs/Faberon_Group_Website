@@ -33,8 +33,9 @@ export function Navbar() {
   }, []);
 
   const openMenu = () => {
-    // The section you're in opens ready; on other pages, Home does.
-    setExpanded(current >= 0 ? current : 0);
+    // The menu opens compact, so every item and the buttons fit on a phone screen.
+    // Only the section you're in shows its links, and Home's long list stays folded.
+    setExpanded(current > 0 ? current : -1);
     setMenuOpen(true);
   };
 

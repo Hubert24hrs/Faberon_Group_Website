@@ -1,4 +1,3 @@
-import { testimonials } from "@/content/testimonials";
 import { siteUrl } from "@/lib/env";
 
 export type SocialLink = { label: string; href: string };
@@ -70,8 +69,6 @@ export const features = {
   work: false,
   insights: false,
   newsletter: false,
-  // On as soon as content/testimonials.ts holds a real, approved quote.
-  testimonials: testimonials.length > 0,
 };
 
 export const primaryCta = { label: "Book a consultation", href: "/contact" };
