@@ -1,32 +1,29 @@
 "use client";
 
-import { ChevronDown, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { services } from "@/content/services";
 import { ButtonLink } from "@/components/ui/button";
 import { demoCta, features, primaryCta, site } from "@/lib/site";
 import { cn } from "@/lib/utils";
-import { ServiceIcon } from "./service-icon";
-import { ThemeToggle } from "./theme-toggle";
 import { Logo } from "./logo";
+import { ServiceIcon } from "./service-icon";
+import { SiteLiquidNav } from "./site-liquid-nav";
+import { ThemeToggle } from "./theme-toggle";
 
-const links = [
+const drawerLinks = [
+  { label: "All services", href: "/services" },
   { label: "Solutions", href: "/solutions" },
   ...(features.work ? [{ label: "Work", href: "/work" }] : []),
   { label: "About Us", href: "/about" },
   ...(features.insights ? [{ label: "Insights", href: "/insights" }] : []),
+  { label: "Contact", href: "/contact" },
 ];
-
-const linkClass =
-  "text-muted hover:text-ink inline-flex h-10 items-center gap-1 rounded-md px-3 text-sm font-medium transition-colors";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [megaOpen, setMegaOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const megaRef = useRef<HTMLDivElement>(null);
-  const megaButtonRef = useRef<HTMLButtonElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
   const drawerButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -36,24 +33,6 @@ export function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  useEffect(() => {
-    if (!megaOpen) return;
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return;
-      setMegaOpen(false);
-      megaButtonRef.current?.focus();
-    };
-    const onPointerDown = (event: PointerEvent) => {
-      if (!megaRef.current?.contains(event.target as Node)) setMegaOpen(false);
-    };
-    document.addEventListener("keydown", onKeyDown);
-    document.addEventListener("pointerdown", onPointerDown);
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      document.removeEventListener("pointerdown", onPointerDown);
-    };
-  }, [megaOpen]);
 
   const closeDrawer = useCallback(() => {
     setDrawerOpen(false);
@@ -94,96 +73,22 @@ export function Navbar() {
     <header
       className={cn(
         "sticky top-0 z-40 border-b transition-colors",
-        scrolled || megaOpen
-          ? "border-line bg-[var(--nav-bg)] backdrop-blur-md"
-          : "border-transparent",
+        scrolled ? "border-line bg-[var(--nav-bg)] backdrop-blur-md" : "border-transparent",
       )}
     >
       <div className="site-container flex h-[var(--nav-height)] items-center justify-between gap-2 sm:gap-4">
-        <Link href="/" aria-label={`${site.legalName} home`} className="-m-1 rounded p-1 text-ink">
+        <Link
+          href="/"
+          aria-label={`${site.legalName} home`}
+          className="-m-1 shrink-0 rounded p-1 text-ink"
+        >
           <Logo />
         </Link>
 
-        <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
-          <div
-            ref={megaRef}
-            className="flex h-[var(--nav-height)] items-center"
-            onMouseEnter={() => setMegaOpen(true)}
-            onMouseLeave={() => setMegaOpen(false)}
-          >
-            <button
-              ref={megaButtonRef}
-              type="button"
-              aria-expanded={megaOpen}
-              aria-controls="services-menu"
-              onClick={() => setMegaOpen((open) => !open)}
-              className={cn(linkClass, megaOpen && "text-ink")}
-            >
-              Services
-              <ChevronDown
-                className={cn("size-4 transition-transform", megaOpen && "rotate-180")}
-                strokeWidth={1.75}
-                aria-hidden
-              />
-            </button>
+        {/* Liquid-glass navigation, in the menu bar on larger screens. */}
+        <SiteLiquidNav className="hidden lg:block" />
 
-            <div
-              id="services-menu"
-              hidden={!megaOpen}
-              className="absolute inset-x-0 top-full pt-px"
-            >
-              <div className="border-b border-line bg-surface">
-                <div className="site-container grid grid-cols-12 gap-8 py-8">
-                  <div className="col-span-3">
-                    <p className="eyebrow">Services</p>
-                    <p className="mt-3 text-sm text-muted">
-                      What Faberon Group builds, led by SaaS and AI.
-                    </p>
-                    <Link
-                      href="/services"
-                      onClick={() => setMegaOpen(false)}
-                      className="mt-4 inline-block text-sm font-medium text-accent-text hover:underline"
-                    >
-                      All services
-                    </Link>
-                  </div>
-                  <ul className="col-span-9 grid grid-cols-3 gap-2">
-                    {services.map((service) => (
-                      <li key={service.slug}>
-                        <Link
-                          href={`/services/${service.slug}`}
-                          onClick={() => setMegaOpen(false)}
-                          className="flex gap-3 rounded-md p-3 transition-colors hover:bg-surface-2"
-                        >
-                          <ServiceIcon
-                            slug={service.slug}
-                            className="mt-0.5 size-5 shrink-0 text-accent-text"
-                          />
-                          <span>
-                            <span className="block text-sm font-medium text-ink">
-                              {service.name}
-                            </span>
-                            <span className="mt-0.5 block text-sm leading-snug text-muted">
-                              {service.navBlurb}
-                            </span>
-                          </span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {links.map((link) => (
-            <Link key={link.href} href={link.href} className={linkClass}>
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-1 sm:gap-2">
+        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
           <span className="max-sm:hidden">
             <ThemeToggle />
           </span>
@@ -207,6 +112,9 @@ export function Navbar() {
         </div>
       </div>
 
+      {/* On phones and tablets the same navigation sits on a second row of the menu bar. */}
+      <SiteLiquidNav scroll className="border-t border-line/60 lg:hidden" />
+
       {drawerOpen ? (
         <div
           ref={drawerRef}
@@ -214,7 +122,7 @@ export function Navbar() {
           role="dialog"
           aria-modal="true"
           aria-label="Menu"
-          className="fixed inset-0 z-50 overflow-y-auto bg-bg lg:hidden"
+          className="fixed inset-0 z-50 overflow-y-auto bg-bg pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] lg:hidden"
         >
           <div className="site-container flex h-[var(--nav-height)] items-center justify-between">
             <Link
@@ -252,7 +160,7 @@ export function Navbar() {
               ))}
             </ul>
             <ul className="mt-6">
-              {[{ label: "All services", href: "/services" }, ...links].map((link) => (
+              {drawerLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}

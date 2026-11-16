@@ -4,7 +4,6 @@ import localFont from "next/font/local";
 import type { ReactNode } from "react";
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Footer } from "@/components/layout/footer";
-import { GlassDock } from "@/components/layout/glass-dock";
 import { Navbar } from "@/components/layout/navbar";
 import { themeScript } from "@/components/layout/theme-toggle";
 import { Analytics } from "@/components/analytics/analytics";
@@ -39,6 +38,10 @@ export const metadata: Metadata = {
   },
   description: site.description,
   applicationName: site.name,
+  // Google Search Console ownership check, used by Google Play organisation verification.
+  ...(process.env.GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } }
+    : {}),
   openGraph: {
     type: "website",
     siteName: site.legalName,
@@ -53,6 +56,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
+  // Lets the background reach behind iPhone notches; content uses safe-area insets.
+  viewportFit: "cover",
   themeColor: [
     { media: "(prefers-color-scheme: dark)", color: "#0b0d11" },
     { media: "(prefers-color-scheme: light)", color: "#f6f7f9" },
@@ -84,9 +89,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Navbar />
         <main id="main">{children}</main>
         <Footer />
-        {/* Room for the floating dock, so it never covers the footer. */}
-        <div aria-hidden className="h-24 print:hidden" />
-        <GlassDock />
         <Analytics domain={clientEnv.NEXT_PUBLIC_PLAUSIBLE_DOMAIN} />
       </body>
     </html>

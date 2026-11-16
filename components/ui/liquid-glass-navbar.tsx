@@ -61,8 +61,10 @@ const NIMBUS_CSS = `
 .nimbus-nav[data-gl="off"] .nimbus-drop{display:block}
 .nimbus-nav[data-none="true"] .nimbus-drop{opacity:0}
 .nimbus-item{position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 15px;border:0;border-radius:999px;background:none;color:var(--n-fg-soft);
-  font-family:inherit;font-weight:500;font-size:14px;line-height:1;letter-spacing:-.01em;text-decoration:none;cursor:pointer;transition:color .25s;white-space:nowrap}
-.nimbus-item:hover,.nimbus-item[aria-current="page"]{color:var(--n-fg)}
+  font-family:inherit;font-weight:500;font-size:14px;line-height:1;letter-spacing:-.01em;text-decoration:none;cursor:pointer;transition:color .25s;white-space:nowrap;touch-action:manipulation}
+.nimbus-item[aria-current="page"]{color:var(--n-fg)}
+@media (hover:hover){.nimbus-item:hover{color:var(--n-fg)}}
+@media (pointer:coarse){.nimbus-item{height:46px}}
 .nimbus-item:focus-visible{outline:2px solid var(--accent,#d5a63a);outline-offset:2px}
 .nv-ico{position:relative;display:inline-flex;flex:none}
 .nv-ico svg{transition:transform .45s cubic-bezier(.3,1.6,.5,1)}
@@ -179,8 +181,14 @@ function initGL(canvas: HTMLCanvasElement): GLContext | null {
     gl.compileShader(s);
     return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null;
   };
+  // Some older Android GPUs lack high precision in fragment shaders.
+  const highp =
+    (gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.HIGH_FLOAT)?.precision ?? 0) > 0;
   const vs = compile(gl.VERTEX_SHADER, VERT);
-  const fs = compile(gl.FRAGMENT_SHADER, FRAG);
+  const fs = compile(
+    gl.FRAGMENT_SHADER,
+    highp ? FRAG : FRAG.replace("precision highp float;", "precision mediump float;"),
+  );
   const p = gl.createProgram();
   if (!vs || !fs || !p) return null;
   gl.attachShader(p, vs);

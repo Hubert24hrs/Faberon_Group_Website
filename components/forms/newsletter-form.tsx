@@ -44,7 +44,7 @@ export function NewsletterForm() {
           type="email"
           required
           autoComplete="email"
-          className="min-w-0 flex-1 rounded-md border border-line-strong bg-surface px-3 text-sm"
+          className="min-w-0 flex-1 rounded-md border border-line-strong bg-surface px-3 text-base sm:text-sm"
         />
         <Button type="submit" variant="secondary" disabled={status === "sending"}>
           Subscribe
