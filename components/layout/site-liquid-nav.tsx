@@ -22,8 +22,8 @@ function subscribeTheme(onChange: () => void) {
 const readTone = () => (document.documentElement.dataset.theme === "light" ? "light" : "dark");
 
 // The liquid-glass site navigation, with every item named.
-// `scroll`: for phones and tablets. The bar scrolls sideways when the names don't fit,
-// and keeps the current page in view.
+// `scroll`: for phones and tablets. Labels are sized to the screen so all six fit; on an
+// unusually narrow screen the bar scrolls sideways and keeps the current page in view.
 export function SiteLiquidNav({
   className,
   scroll = false,
@@ -50,7 +50,8 @@ export function SiteLiquidNav({
       active={active}
       tone={tone}
       compact={false}
-      dense
+      dense={!scroll}
+      fit={scroll}
       ariaLabel="Main"
     />
   );
@@ -66,7 +67,7 @@ export function SiteLiquidNav({
       )}
     >
       {/* The water canvas bleeds 14px past the pill; the padding keeps it inside the scroll box. */}
-      <div className="mx-auto w-max px-4 pt-1 pb-2.5">{nav}</div>
+      <div className="mx-auto w-max px-2 pt-1 pb-2.5">{nav}</div>
     </div>
   );
 }
