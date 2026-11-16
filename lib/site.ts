@@ -43,7 +43,7 @@ export const site: SiteConfig = {
     phone: null,
     whatsapp: null,
     address: {
-      street: "House 5, Zion Court Estate, Ikate",
+      street: "House 5, Gate 3, Zion Court Estate, Prince Samuel Adedoyin Street, Ikate",
       locality: "Lekki",
       region: "Lagos",
       country: "Nigeria",
