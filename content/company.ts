@@ -150,7 +150,7 @@ export const agentFlow = [
 
 export const faqs = [
   {
-    question: "What does i-doko ai Technologies build?",
+    question: "What does Faberon Group build?",
     answer:
       "Custom SaaS, AI agents, AI automation, mobile apps and websites, for corporations, organisations, brands and individuals.",
   },
@@ -192,7 +192,7 @@ export const faqs = [
   {
     question: "Where are you based?",
     answer:
-      "We're based in Nigeria and work with clients globally. Consultations and project communication happen online.",
+      "Our office is in Lekki, Lagos, Nigeria, and we work with clients globally. Consultations and project communication happen online or in person.",
   },
   {
     question: "Do you support the work after launch?",

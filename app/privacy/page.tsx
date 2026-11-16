@@ -1,28 +1,53 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/ui/page-header";
-import { site } from "@/lib/site";
+import { formatAddress, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "How i-doko ai Technologies collects and uses personal data.",
+  description: `How ${site.legalName} collects and uses personal data on its website and mobile apps.`,
   alternates: { canonical: "/privacy" },
 };
 
-// TODO: have a lawyer review this before launch, and add the legal name and contact email.
+// TODO: have a lawyer review this before launch.
 export default function PrivacyPage() {
+  const email = site.contact.email;
+  const contactLink = email ? (
+    <a href={`mailto:${email}`} className="text-accent-text underline">
+      {email}
+    </a>
+  ) : (
+    <a href="/contact" className="text-accent-text underline">
+      our contact page
+    </a>
+  );
+
   return (
     <>
-      <PageHeader eyebrow="Legal" title="Privacy Policy" lead="Last updated 2 November 2026." />
+      <PageHeader eyebrow="Legal" title="Privacy Policy" lead="Last updated 16 November 2026." />
       <div className="site-container py-16">
         <article className="prose-legal max-w-prose">
           <h2>Who we are</h2>
           <p>
-            {site.legalName ?? site.name} is a technology company based in {site.base}. We control
-            the personal data described here. This policy is written with the Nigeria Data
-            Protection Act 2023 and the EU and UK GDPR in mind.
+            {site.legalName} (&quot;we&quot;, &quot;us&quot;) is a technology company registered in
+            Nigeria, with its office at {formatAddress(site.contact.address)}. We control the
+            personal data described in this policy. It is written with the Nigeria Data Protection
+            Act 2023 and the EU and UK GDPR in mind.
           </p>
 
-          <h2>What we collect</h2>
+          <h2>What this policy covers</h2>
+          <ul>
+            <li>This website.</li>
+            <li>
+              Mobile apps that {site.legalName} publishes under its own name on the Apple App Store
+              and Google Play.
+            </li>
+          </ul>
+          <p>
+            When we build an app or system for a client and it&apos;s published under the
+            client&apos;s name, the client controls that data and their privacy policy applies.
+          </p>
+
+          <h2>What we collect on this website</h2>
           <ul>
             <li>
               Details you send through our consultation form: name, email address, company, the
@@ -32,18 +57,44 @@ export default function PrivacyPage() {
             <li>Standard server logs, such as IP address, which also support rate limiting.</li>
           </ul>
 
-          <h2>Why we use it</h2>
+          <h2>What our mobile apps may collect</h2>
+          <p>
+            Each app collects only what it needs to work. The App Store and Google Play listing for
+            each app states exactly which data it collects. Depending on the app, this can include:
+          </p>
+          <ul>
+            <li>Account details, such as your name and email address, if the app has accounts.</li>
+            <li>Content you choose to enter or upload in the app.</li>
+            <li>
+              Device and diagnostic data, such as device model, operating system version and crash
+              reports, used to fix problems.
+            </li>
+          </ul>
+          <p>
+            Our apps ask for permission before using your camera, location, contacts, microphone or
+            photos, and only use that access for the feature you&apos;re using. You can withdraw a
+            permission at any time in your device settings.
+          </p>
+
+          <h2>How we use your data</h2>
           <ul>
             <li>To reply to your enquiry and take steps before entering a contract with you.</li>
-            <li>To keep the site secure and prevent abuse, which is our legitimate interest.</li>
+            <li>To provide and support the apps and services you use.</li>
+            <li>To keep our website and apps secure and prevent abuse.</li>
+            <li>To meet our legal obligations.</li>
           </ul>
-          <p>We don&apos;t sell your data, and we don&apos;t use it for automated decisions.</p>
+          <p>
+            We don&apos;t sell your data, we don&apos;t use it for advertising, and we don&apos;t
+            use it for automated decisions that have legal effects on you.
+          </p>
 
           <h2>Who we share it with</h2>
           <p>
-            We use service providers to run this site: Vercel for hosting, Resend for delivering
-            form emails, and Cal.com for booking where it&apos;s enabled. They process data for us
-            and only on our instructions. We may also disclose data where the law requires it.
+            We use service providers that process data for us and only on our instructions: Vercel
+            for website hosting, Resend for delivering form emails, Cal.com for booking where
+            it&apos;s enabled, and Apple and Google for app distribution. Any other provider an app
+            uses, such as for crash reporting, is named in that app&apos;s store listing. We may
+            also disclose data where the law requires it.
           </p>
 
           <h2>International transfers</h2>
@@ -55,7 +106,22 @@ export default function PrivacyPage() {
           <h2>How long we keep it</h2>
           <p>
             We keep enquiries for up to 24 months after our last contact unless they lead to a
-            project. Project records are kept for as long as our contract and the law require.
+            project. We keep app account data for as long as your account is open, then delete it.
+            Project records are kept for as long as our contracts and the law require.
+          </p>
+
+          <h2>Deleting your account and data</h2>
+          <p>
+            Where an app has accounts, you can delete your account from within the app. You can also
+            ask us to delete your account and data by emailing {contactLink}. We&apos;ll confirm
+            once it&apos;s done.
+          </p>
+
+          <h2>Children</h2>
+          <p>
+            Our website and apps are not directed at children under 13, and we don&apos;t knowingly
+            collect their data. If you believe a child has given us personal data, contact us and
+            we&apos;ll delete it.
           </p>
 
           <h2>Your rights</h2>
@@ -67,9 +133,10 @@ export default function PrivacyPage() {
 
           <h2>Cookies and analytics</h2>
           <p>
-            This site doesn&apos;t use advertising or tracking cookies. Your theme choice is stored
-            in your own browser. If we enable analytics, we use Plausible, which doesn&apos;t use
-            cookies or collect personal data. A booking embed may set its own cookies.
+            This website doesn&apos;t use advertising or tracking cookies. Your theme choice is
+            stored in your own browser. If we enable website analytics, we use Plausible, which
+            doesn&apos;t use cookies or collect personal data. A booking embed may set its own
+            cookies.
           </p>
 
           <h2>Security</h2>
@@ -78,20 +145,14 @@ export default function PrivacyPage() {
             secure, so we can&apos;t guarantee absolute security.
           </p>
 
-          <h2>Changes and contact</h2>
+          <h2>Changes</h2>
+          <p>We&apos;ll update this page when this policy changes, and change the date above.</p>
+
+          <h2>Contact</h2>
           <p>
-            We&apos;ll update this page when this policy changes. To ask about your data or use your
-            rights, contact us through{" "}
-            {site.contact.email ? (
-              <a href={`mailto:${site.contact.email}`} className="text-accent-text underline">
-                {site.contact.email}
-              </a>
-            ) : (
-              <a href="/contact" className="text-accent-text underline">
-                our contact page
-              </a>
-            )}
-            .
+            {site.legalName}, {formatAddress(site.contact.address)}. To ask about your data or use
+            your rights, contact {contactLink}
+            {site.contact.phone ? ` or call ${site.contact.phone}` : ""}.
           </p>
         </article>
       </div>

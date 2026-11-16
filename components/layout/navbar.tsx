@@ -5,16 +5,16 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { services } from "@/content/services";
 import { ButtonLink } from "@/components/ui/button";
-import { features, primaryCta } from "@/lib/site";
+import { features, primaryCta, site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { ServiceIcon } from "./service-icon";
 import { ThemeToggle } from "./theme-toggle";
-import { Wordmark } from "./wordmark";
+import { Logo } from "./logo";
 
 const links = [
   { label: "Solutions", href: "/solutions" },
   ...(features.work ? [{ label: "Work", href: "/work" }] : []),
-  { label: "About", href: "/about" },
+  { label: "About Us", href: "/about" },
   ...(features.insights ? [{ label: "Insights", href: "/insights" }] : []),
 ];
 
@@ -100,8 +100,8 @@ export function Navbar() {
       )}
     >
       <div className="site-container flex h-[var(--nav-height)] items-center justify-between gap-4">
-        <Link href="/" aria-label="i-doko.ai home" className="-m-1 rounded p-1 text-ink">
-          <Wordmark className="h-[22px]" />
+        <Link href="/" aria-label={`${site.legalName} home`} className="-m-1 rounded p-1 text-ink">
+          <Logo />
         </Link>
 
         <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
@@ -137,7 +137,7 @@ export function Navbar() {
                   <div className="col-span-3">
                     <p className="eyebrow">Services</p>
                     <p className="mt-3 text-sm text-muted">
-                      Five things we build, led by SaaS and AI.
+                      What Faberon Group builds, led by SaaS and AI.
                     </p>
                     <Link
                       href="/services"
@@ -212,8 +212,13 @@ export function Navbar() {
           className="fixed inset-0 z-50 overflow-y-auto bg-bg lg:hidden"
         >
           <div className="site-container flex h-[var(--nav-height)] items-center justify-between">
-            <Link href="/" aria-label="i-doko.ai home" onClick={closeDrawer} className="text-ink">
-              <Wordmark className="h-[22px]" />
+            <Link
+              href="/"
+              aria-label={`${site.legalName} home`}
+              onClick={closeDrawer}
+              className="text-ink"
+            >
+              <Logo />
             </Link>
             <button
               type="button"

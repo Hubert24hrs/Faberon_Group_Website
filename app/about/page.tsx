@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Reveal } from "@/components/motion/reveal";
 import { FinalCta } from "@/components/sections/final-cta";
+import { CompanyDetails } from "@/components/ui/company-details";
 import { PageHeader } from "@/components/ui/page-header";
 import { values } from "@/content/company";
+import { services } from "@/content/services";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "About",
-  description:
-    "i-doko ai Technologies is a Nigerian technology company building software and AI for clients globally.",
+  title: "About Us",
+  description: `${site.legalName} is a Nigerian technology company in Lagos, building SaaS, AI agents, automation, mobile apps and websites for clients globally.`,
   alternates: { canonical: "/about" },
 };
 
@@ -15,9 +18,9 @@ export default function AboutPage() {
   return (
     <>
       <PageHeader
-        eyebrow="About"
+        eyebrow="About us"
         title="Local roots, global standard"
-        lead="i-doko ai Technologies is a technology company based in Nigeria, building software and AI for clients globally."
+        lead={`${site.legalName} is a technology company based in Lagos, Nigeria, building software and AI for clients globally.`}
       />
 
       <section className="py-section">
@@ -36,11 +39,30 @@ export default function AboutPage() {
               to start.
             </p>
             <p className="text-muted">
-              Today we build SaaS, AI agents, automation, mobile apps and websites. We work the same
-              way on every project: agree the scope, build it properly, and hand over everything you
-              need to own it.
+              Today our team works the same way on every project: agree the scope, build it
+              properly, and hand over everything you need to own it.
             </p>
           </div>
+        </div>
+      </section>
+
+      <section className="border-t border-line py-section">
+        <div className="site-container grid gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <p className="eyebrow">What we build</p>
+          </div>
+          <ul className="grid gap-x-8 sm:grid-cols-2 lg:col-span-8">
+            {services.map((service) => (
+              <li key={service.slug} className="border-t border-line py-5">
+                <Link href={`/services/${service.slug}`} className="group block">
+                  <h2 className="text-h3 transition-colors group-hover:text-accent-text">
+                    {service.name}
+                  </h2>
+                  <p className="mt-1.5 text-muted">{service.summary}</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
@@ -74,6 +96,17 @@ export default function AboutPage() {
                 </div>
               </Reveal>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-line py-section">
+        <div className="site-container grid gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <p className="eyebrow">Company information</p>
+          </div>
+          <div className="lg:col-span-8">
+            <CompanyDetails />
           </div>
         </div>
       </section>

@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { ConsultationForm } from "@/components/forms/consultation-form";
+import { CompanyDetails } from "@/components/ui/company-details";
 import { PageHeader } from "@/components/ui/page-header";
 import { getBookingUrl } from "@/lib/booking";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Book a consultation",
-  description:
-    "Tell us what you need built. We'll reply to arrange a consultation about your project.",
+  title: "Contact",
+  description: `Contact ${site.legalName} in Lekki, Lagos, or book a consultation about your project.`,
   alternates: { canonical: "/contact" },
 };
 
@@ -19,20 +19,6 @@ const nextSteps = [
 
 export default function ContactPage() {
   const bookingUrl = getBookingUrl();
-  const { email, phone, whatsapp, address, hours } = site.contact;
-  const details = [
-    email ? { label: "Email", value: email, href: `mailto:${email}` } : null,
-    phone ? { label: "Phone", value: phone, href: `tel:${phone.replace(/\s/g, "")}` } : null,
-    whatsapp
-      ? {
-          label: "WhatsApp",
-          value: whatsapp,
-          href: `https://wa.me/${whatsapp.replace(/\D/g, "")}`,
-        }
-      : null,
-    address ? { label: "Address", value: address } : null,
-    hours ? { label: "Hours", value: hours } : null,
-  ].filter((detail) => detail !== null);
 
   return (
     <>
@@ -47,39 +33,29 @@ export default function ContactPage() {
           <ConsultationForm />
         </div>
 
-        <aside className="lg:col-span-4 lg:col-start-9">
-          <h2 className="eyebrow font-sans font-normal">What happens next</h2>
-          <ol className="mt-5 space-y-4">
-            {nextSteps.map((step, index) => (
-              <li key={step} className="grid grid-cols-[2rem_1fr]">
-                <span className="pt-1 font-mono text-xs text-subtle">{index + 1}</span>
-                <span className="text-muted">{step}</span>
-              </li>
-            ))}
-          </ol>
+        <aside className="space-y-10 lg:col-span-5">
+          <section aria-labelledby="company-details">
+            <h2 id="company-details" className="text-h3">
+              Company details
+            </h2>
+            <div className="mt-4 rounded-lg border border-line bg-surface px-5">
+              <CompanyDetails />
+            </div>
+          </section>
 
-          {details.length > 0 ? (
-            <dl className="mt-8 space-y-3 border-t border-line pt-6">
-              {details.map((detail) => (
-                <div key={detail.label}>
-                  <dt className="font-mono text-xs text-subtle">{detail.label}</dt>
-                  <dd>
-                    {detail.href ? (
-                      <a href={detail.href} className="hover:text-accent-text">
-                        {detail.value}
-                      </a>
-                    ) : (
-                      detail.value
-                    )}
-                  </dd>
-                </div>
+          <section aria-labelledby="next-steps">
+            <h2 id="next-steps" className="eyebrow font-sans font-normal">
+              What happens next
+            </h2>
+            <ol className="mt-5 space-y-4">
+              {nextSteps.map((step, index) => (
+                <li key={step} className="grid grid-cols-[2rem_1fr]">
+                  <span className="pt-1 font-mono text-xs text-subtle">{index + 1}</span>
+                  <span className="text-muted">{step}</span>
+                </li>
               ))}
-            </dl>
-          ) : null}
-
-          <p className="mt-8 border-t border-line pt-6 text-sm text-muted">
-            Based in {site.base}, serving clients globally.
-          </p>
+            </ol>
+          </section>
         </aside>
       </div>
 

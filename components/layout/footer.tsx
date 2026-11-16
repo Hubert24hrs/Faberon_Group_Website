@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { services } from "@/content/services";
-import { features, site } from "@/lib/site";
+import { features, formatAddress, site, telHref } from "@/lib/site";
 import { NewsletterForm } from "@/components/forms/newsletter-form";
-import { Wordmark } from "./wordmark";
+import { Logo } from "./logo";
 
 const company = [
+  { label: "About Us", href: "/about" },
   { label: "Solutions", href: "/solutions" },
   ...(features.work ? [{ label: "Work", href: "/work" }] : []),
-  { label: "About", href: "/about" },
   ...(features.insights ? [{ label: "Insights", href: "/insights" }] : []),
   { label: "Contact", href: "/contact" },
 ];
@@ -42,17 +42,34 @@ function FooterColumn({
 
 export function Footer() {
   const year = new Date().getFullYear();
-  const owner = site.legalName ?? site.name;
+  const { email, phone } = site.contact;
 
   return (
     <footer className="border-t border-line">
       <div className="site-container grid grid-cols-2 gap-10 py-14 md:grid-cols-12">
         <div className="col-span-2 md:col-span-5">
-          <Link href="/" aria-label="i-doko.ai home" className="inline-block text-ink">
-            <Wordmark className="h-6" />
+          <Link href="/" aria-label={`${site.legalName} home`} className="inline-block text-ink">
+            <Logo large />
           </Link>
-          <p className="mt-4 font-display text-lg font-semibold">{owner}</p>
-          <p className="mt-1 max-w-xs text-sm text-muted">{site.tagline}</p>
+          <p className="mt-4 max-w-xs text-sm text-muted">{site.tagline}</p>
+          <address className="mt-6 max-w-xs space-y-1.5 text-sm text-muted not-italic">
+            <p className="font-medium text-ink">{site.legalName}</p>
+            <p>{formatAddress(site.contact.address)}</p>
+            {email ? (
+              <p>
+                <a href={`mailto:${email}`} className="hover:text-ink">
+                  {email}
+                </a>
+              </p>
+            ) : null}
+            {phone ? (
+              <p>
+                <a href={telHref(phone)} className="hover:text-ink">
+                  {phone}
+                </a>
+              </p>
+            ) : null}
+          </address>
           {features.newsletter ? <NewsletterForm /> : null}
         </div>
         <div className="md:col-span-3">
@@ -89,10 +106,10 @@ export function Footer() {
       <div className="border-t border-line">
         <div className="site-container flex flex-col gap-1 py-6 text-sm text-subtle sm:flex-row sm:justify-between">
           <p>
-            &copy; {year} {owner}
-            {site.registrationNumber ? ` · RC ${site.registrationNumber}` : ""}
+            &copy; {year} {site.legalName}. All rights reserved.
+            {site.registrationNumber ? ` RC ${site.registrationNumber}.` : ""}
           </p>
-          <p>Based in {site.base}, serving clients globally</p>
+          <p>{site.base}, serving clients globally</p>
         </div>
       </div>
     </footer>

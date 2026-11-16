@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { site } from "@/lib/site";
 
-export const alt = `${site.name}: ${site.tagline}`;
+export const alt = `${site.legalName}: ${site.tagline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -19,8 +19,61 @@ export default function OpengraphImage() {
         color: "#eceef2",
       }}
     >
-      <div style={{ display: "flex", fontSize: 36, fontWeight: 600 }}>
-        i-doko<span style={{ color: "#f0a63a" }}>.</span>ai
+      <div
+        style={{ display: "flex", alignItems: "center", gap: 20, fontSize: 36, fontWeight: 600 }}
+      >
+        <div
+          style={{
+            display: "flex",
+            position: "relative",
+            width: 64,
+            height: 64,
+            borderRadius: 14,
+            background: "#eceef2",
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              left: 20,
+              top: 16,
+              width: 9,
+              height: 32,
+              background: "#0b0d11",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              left: 20,
+              top: 16,
+              width: 26,
+              height: 9,
+              background: "#0b0d11",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              left: 20,
+              top: 30,
+              width: 17,
+              height: 9,
+              background: "#0b0d11",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              left: 41,
+              top: 30,
+              width: 9,
+              height: 9,
+              background: "#f0a63a",
+            }}
+          />
+        </div>
+        {site.name}
       </div>
       <div style={{ display: "flex", flexDirection: "column" }}>
         <div style={{ display: "flex", flexDirection: "column", fontSize: 76, fontWeight: 600 }}>
@@ -28,7 +81,7 @@ export default function OpengraphImage() {
           <span>Software and AI you own.</span>
         </div>
         <div style={{ display: "flex", marginTop: 28, fontSize: 32, color: "#a2a9b5" }}>
-          {site.name}
+          {site.legalName}
         </div>
       </div>
     </div>,

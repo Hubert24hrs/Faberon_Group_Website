@@ -1,6 +1,6 @@
-# i-doko.ai
+# Faberon Group Technologies Limited website
 
-Corporate website for i-doko.ai, built with Next.js (App Router), TypeScript, Tailwind CSS and Framer Motion.
+Corporate website for Faberon Group Technologies Limited, built with Next.js (App Router), TypeScript, Tailwind CSS and Framer Motion.
 
 ## Run it locally
 
@@ -53,14 +53,14 @@ Every page tells search engines not to index it until launch. When you're ready 
 
 Content lives in typed files, so most updates are a single-file edit.
 
-| What to change                                  | Where                     |
-| ----------------------------------------------- | ------------------------- |
-| Contact details, socials, legal name, RC number | `lib/site.ts`             |
-| Services                                        | `content/services.ts`     |
-| Audiences, process, values, FAQ, tech stack     | `content/company.ts`      |
-| Hero console sample runs                        | `content/agent-runs.ts`   |
-| Case studies                                    | `content/case-studies.ts` |
-| Insights posts                                  | `content/insights.ts`     |
+| What to change                                        | Where                     |
+| ----------------------------------------------------- | ------------------------- |
+| Legal name, RC number, address, email, phone, socials | `lib/site.ts`             |
+| Services                                              | `content/services.ts`     |
+| Audiences, process, values, FAQ, tech stack           | `content/company.ts`      |
+| Hero console sample runs                              | `content/agent-runs.ts`   |
+| Case studies                                          | `content/case-studies.ts` |
+| Insights posts                                        | `content/insights.ts`     |
 
 ### Turn on hidden sections
 

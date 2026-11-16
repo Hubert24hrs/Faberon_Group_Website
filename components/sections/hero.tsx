@@ -8,7 +8,7 @@ export function Hero() {
       <div className="site-container grid grid-cols-1 items-center gap-12 py-14 sm:py-20 lg:grid-cols-12 lg:gap-10 lg:py-24">
         <div className="lg:col-span-6">
           <p className="mb-5 font-display text-company font-semibold text-accent-text">
-            {site.name}
+            {site.legalName}
           </p>
           <h1 className="text-display">
             <span className="block">Our team&apos;s best work.</span>

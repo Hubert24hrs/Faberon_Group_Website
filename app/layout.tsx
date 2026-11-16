@@ -31,14 +31,14 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} | Custom SaaS, AI agents and automation`,
+    default: `${site.legalName} | Custom SaaS, AI agents and mobile apps`,
     template: `%s | ${site.name}`,
   },
   description: site.description,
   applicationName: site.name,
   openGraph: {
     type: "website",
-    siteName: site.name,
+    siteName: site.legalName,
     title: site.tagline,
     description: site.description,
   },

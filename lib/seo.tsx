@@ -18,12 +18,19 @@ export function organizationJsonLd() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: site.name,
-    alternateName: site.brand,
-    ...(site.legalName ? { legalName: site.legalName } : {}),
+    legalName: site.legalName,
     url: site.url,
     description: site.description,
     areaServed: "Worldwide",
-    address: { "@type": "PostalAddress", addressCountry: "NG" },
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: site.contact.address.street,
+      addressLocality: site.contact.address.locality,
+      addressRegion: site.contact.address.region,
+      addressCountry: site.contact.address.countryCode,
+    },
+    ...(site.contact.email ? { email: site.contact.email } : {}),
+    ...(site.contact.phone ? { telephone: site.contact.phone } : {}),
     ...(site.socials.length > 0 ? { sameAs: site.socials.map((social) => social.href) } : {}),
   };
 }
@@ -36,7 +43,7 @@ export function serviceJsonLd(service: Service) {
     description: service.summary,
     url: absoluteUrl(`/services/${service.slug}`, site.url),
     areaServed: "Worldwide",
-    provider: { "@type": "Organization", name: site.name, url: site.url },
+    provider: { "@type": "Organization", name: site.legalName, url: site.url },
   };
 }
 
