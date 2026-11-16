@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { logoColors, logoShapes } from "@/components/layout/logo";
 import { site } from "@/lib/site";
 
 export const alt = `${site.legalName}: ${site.tagline}`;
@@ -22,57 +23,12 @@ export default function OpengraphImage() {
       <div
         style={{ display: "flex", alignItems: "center", gap: 20, fontSize: 36, fontWeight: 600 }}
       >
-        <div
-          style={{
-            display: "flex",
-            position: "relative",
-            width: 64,
-            height: 64,
-            borderRadius: 14,
-            background: "#eceef2",
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              left: 20,
-              top: 16,
-              width: 9,
-              height: 32,
-              background: "#0b0d11",
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              left: 20,
-              top: 16,
-              width: 26,
-              height: 9,
-              background: "#0b0d11",
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              left: 20,
-              top: 30,
-              width: 17,
-              height: 9,
-              background: "#0b0d11",
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              left: 41,
-              top: 30,
-              width: 9,
-              height: 9,
-              background: "#f0a63a",
-            }}
-          />
-        </div>
+        <svg width="64" height="64" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="236" fill={logoColors.navy} />
+          <polygon points={logoShapes.letter} fill={logoColors.cream} />
+          <polygon points={logoShapes.bar} fill={logoColors.gold} />
+          <polygon points={logoShapes.peak} fill={logoColors.gold} />
+        </svg>
         {site.name}
       </div>
       <div style={{ display: "flex", flexDirection: "column" }}>

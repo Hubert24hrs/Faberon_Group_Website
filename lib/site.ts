@@ -50,8 +50,7 @@ export const site: SiteConfig = {
     },
     hours: null,
   },
-  // TODO: add social profiles, e.g. { label: "LinkedIn", href: "https://..." }.
-  socials: [],
+  socials: [{ label: "TikTok", href: "https://www.tiktok.com/@faberon_group" }],
 };
 
 export function formatAddress({ street, locality, region, country }: PostalAddress) {

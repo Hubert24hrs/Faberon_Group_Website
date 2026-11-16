@@ -87,19 +87,23 @@ export function Footer() {
         <div className="md:col-span-2">
           <FooterColumn title="Legal" links={legal} />
           {site.socials.length > 0 ? (
-            <ul className="mt-6 flex flex-wrap gap-x-4 gap-y-2">
-              {site.socials.map((social) => (
-                <li key={social.href}>
-                  <a
-                    href={social.href}
-                    rel="noreferrer"
-                    className="text-sm text-muted transition-colors hover:text-ink"
-                  >
-                    {social.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <div className="mt-8">
+              <h2 className="eyebrow font-sans font-normal text-subtle">Follow us</h2>
+              <ul className="mt-4 space-y-2.5">
+                {site.socials.map((social) => (
+                  <li key={social.href}>
+                    <a
+                      href={social.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-sm text-muted transition-colors hover:text-ink"
+                    >
+                      {social.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ) : null}
         </div>
       </div>

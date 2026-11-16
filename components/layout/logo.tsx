@@ -1,15 +1,23 @@
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-// Original "F" monogram. The amber square carries over the accent from the design system.
+// The Faberon Group logo, redrawn from the supplied artwork. Brand colours are
+// fixed so the mark looks the same in both themes.
+export const logoColors = { navy: "#0A2038", cream: "#F3F1E4", gold: "#D5A63A" };
+
+export const logoShapes = {
+  letter: "292,216 752,216 692,344 428,344 428,808 292,808",
+  bar: "428,448 660,448 608,572 428,572",
+  peak: "680,681 760,808 600,808",
+};
+
 export function LogoMark({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 32 32" aria-hidden className={cn("size-8 shrink-0", className)}>
-      <rect width="32" height="32" rx="7" fill="var(--ink)" />
-      <rect x="10" y="8" width="4.4" height="16" fill="var(--bg)" />
-      <rect x="10" y="8" width="13" height="4.4" fill="var(--bg)" />
-      <rect x="10" y="14.8" width="8.6" height="4.4" fill="var(--bg)" />
-      <rect x="20.4" y="14.8" width="4.4" height="4.4" fill="var(--accent)" />
+    <svg viewBox="0 0 1024 1024" aria-hidden className={cn("size-8 shrink-0", className)}>
+      <rect width="1024" height="1024" rx="236" fill={logoColors.navy} />
+      <polygon points={logoShapes.letter} fill={logoColors.cream} />
+      <polygon points={logoShapes.bar} fill={logoColors.gold} />
+      <polygon points={logoShapes.peak} fill={logoColors.gold} />
     </svg>
   );
 }
