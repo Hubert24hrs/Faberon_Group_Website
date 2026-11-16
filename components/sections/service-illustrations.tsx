@@ -122,6 +122,99 @@ function WebsiteIllustration() {
   );
 }
 
+function MachineLearningIllustration() {
+  const points = [
+    [18, 58],
+    [30, 50],
+    [44, 54],
+    [58, 42],
+    [70, 46],
+    [86, 34],
+    [100, 38],
+    [116, 26],
+    [130, 30],
+    [146, 18],
+  ];
+  return (
+    <svg aria-hidden viewBox="0 0 164 72" fill="none" className="h-auto w-full">
+      <path d="M8 66h148M8 66V6" stroke="var(--line-strong)" strokeWidth="1.5" />
+      <path d="M14 60 150 16" stroke="var(--accent)" strokeWidth="1.5" strokeDasharray="4 4" />
+      {points.map(([x, y], index) => (
+        <circle
+          key={index}
+          cx={x}
+          cy={y}
+          r="3"
+          fill={index === 7 ? "var(--accent)" : "var(--muted)"}
+        />
+      ))}
+    </svg>
+  );
+}
+
+function DataIllustration() {
+  return (
+    <div aria-hidden className="overflow-hidden rounded-md border border-line bg-bg">
+      <div className="grid grid-cols-4 gap-2 border-b border-line bg-surface-2 p-2.5">
+        <div className="h-2 rounded-sm bg-accent" />
+        {[0, 1, 2].map((cell) => (
+          <div key={cell} className="h-2 rounded-sm bg-line-strong" />
+        ))}
+      </div>
+      {[0, 1, 2, 3].map((row) => (
+        <div
+          key={row}
+          className="grid grid-cols-4 gap-2 border-b border-line p-2.5 last:border-b-0"
+        >
+          {[0, 1, 2, 3].map((cell) => (
+            <div key={cell} className="h-1.5 rounded-sm bg-surface-2" />
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function FullStackIllustration() {
+  const layers = ["Interface", "API", "Database"];
+  return (
+    <div aria-hidden className="space-y-2 font-mono text-xs">
+      {layers.map((layer, index) => (
+        <div
+          key={layer}
+          className={
+            index === 1
+              ? "rounded-sm border border-accent bg-accent-soft p-2.5 text-accent-text"
+              : "rounded-sm border border-line bg-bg p-2.5 text-muted"
+          }
+        >
+          {layer}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function CloudIllustration() {
+  const stages = ["Build", "Test", "Deploy", "Monitor"];
+  return (
+    <div aria-hidden className="flex items-center gap-1.5 font-mono text-[0.6875rem]">
+      {stages.map((stage, index) => (
+        <div
+          key={stage}
+          className={
+            index === stages.length - 1
+              ? "flex-1 rounded-sm border border-accent bg-accent-soft py-2.5 text-center text-accent-text"
+              : "flex-1 rounded-sm border border-line bg-bg py-2.5 text-center text-muted"
+          }
+        >
+          {stage}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function ServiceIllustration({ slug }: { slug: ServiceSlug }) {
   switch (slug) {
     case "custom-saas":
@@ -134,5 +227,13 @@ export function ServiceIllustration({ slug }: { slug: ServiceSlug }) {
       return <MobileIllustration />;
     case "websites":
       return <WebsiteIllustration />;
+    case "machine-learning":
+      return <MachineLearningIllustration />;
+    case "data-solutions":
+      return <DataIllustration />;
+    case "full-stack-development":
+      return <FullStackIllustration />;
+    case "cloud-devops":
+      return <CloudIllustration />;
   }
 }

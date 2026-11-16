@@ -1,12 +1,13 @@
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import { ServiceIcon } from "@/components/layout/service-icon";
 import { Reveal } from "@/components/motion/reveal";
 import { SectionHeader } from "@/components/ui/section-header";
-import { services, type ServiceSlug } from "@/content/services";
+import { coreServices, engineeringServices, type ServiceSlug } from "@/content/services";
 import { cn } from "@/lib/utils";
 import { ServiceIllustration } from "./service-illustrations";
 
-const tiles: Record<ServiceSlug, string> = {
+const tiles: Partial<Record<ServiceSlug, string>> = {
   "custom-saas": "md:col-span-2 lg:col-span-8",
   "ai-agents": "lg:col-span-4 lg:row-span-2",
   "ai-automation": "lg:col-span-4",
@@ -24,13 +25,13 @@ export function ServicesBento() {
         <Reveal>
           <SectionHeader
             eyebrow="What we build"
-            title="Five services, led by SaaS and AI"
+            title="Core services, led by SaaS and AI"
             lead="Each one ends the same way: working software, the code, and the documentation to run it."
           />
         </Reveal>
 
         <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-12">
-          {services.map((service, index) => (
+          {coreServices.map((service, index) => (
             <Reveal
               key={service.slug}
               delay={index * 0.05}
@@ -66,6 +67,33 @@ export function ServicesBento() {
             </Reveal>
           ))}
         </div>
+
+        <Reveal className="mt-10">
+          <h3 className="eyebrow">Specialist engineering</h3>
+          <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {engineeringServices.map((service) => (
+              <li key={service.slug}>
+                <Link
+                  href={`/services/${service.slug}`}
+                  className="group flex h-full items-start gap-3 rounded-lg border border-line p-4 transition-colors hover:border-line-strong"
+                >
+                  <ServiceIcon
+                    slug={service.slug}
+                    className="mt-0.5 size-5 shrink-0 text-accent-text"
+                  />
+                  <span>
+                    <span className="block font-medium transition-colors group-hover:text-accent-text">
+                      {service.name}
+                    </span>
+                    <span className="mt-0.5 block text-sm leading-snug text-muted">
+                      {service.navBlurb}
+                    </span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
       </div>
     </section>
   );

@@ -1,4 +1,15 @@
-import { Layers, PanelTop, Smartphone, Waypoints, Workflow, type LucideProps } from "lucide-react";
+import {
+  ChartScatter,
+  Cloud,
+  CodeXml,
+  Database,
+  Layers,
+  PanelTop,
+  Smartphone,
+  Waypoints,
+  Workflow,
+  type LucideProps,
+} from "lucide-react";
 import type { ServiceSlug } from "@/content/services";
 
 const icons = {
@@ -7,6 +18,10 @@ const icons = {
   "ai-automation": Workflow,
   "mobile-apps": Smartphone,
   websites: PanelTop,
+  "machine-learning": ChartScatter,
+  "data-solutions": Database,
+  "full-stack-development": CodeXml,
+  "cloud-devops": Cloud,
 } satisfies Record<ServiceSlug, unknown>;
 
 export function ServiceIcon({ slug, ...props }: { slug: ServiceSlug } & LucideProps) {

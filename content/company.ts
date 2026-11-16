@@ -5,6 +5,9 @@ export const capabilities = [
   "Mobile apps",
   "Agent design",
   "Workflow automation",
+  "Machine learning",
+  "Data engineering",
+  "Cloud and DevOps",
   "System integration",
   "Human approval flows",
   "Technical documentation",
@@ -152,7 +155,7 @@ export const faqs = [
   {
     question: "What does Faberon Group build?",
     answer:
-      "Custom SaaS, AI agents, AI automation, mobile apps and websites, for corporations, organisations, brands and individuals.",
+      "Custom SaaS, AI agents, AI automation, mobile apps and websites, plus machine learning, data, full-stack and cloud engineering. We work with corporations, organisations, brands and individuals.",
   },
   {
     question: "Who owns the code?",

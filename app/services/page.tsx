@@ -5,14 +5,29 @@ import { ServiceIllustration } from "@/components/sections/service-illustrations
 import { FinalCta } from "@/components/sections/final-cta";
 import { PageHeader } from "@/components/ui/page-header";
 import { SectionHeader } from "@/components/ui/section-header";
-import { services } from "@/content/services";
+import { coreServices, engineeringServices } from "@/content/services";
 
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Custom SaaS, AI agents, AI automation, mobile apps and websites, built by engineers and handed over with the code and documentation.",
+    "Custom SaaS, AI agents, AI automation, mobile apps and websites, plus machine learning, data, full-stack and cloud engineering, handed over with the code and documentation.",
   alternates: { canonical: "/services" },
 };
+
+const serviceSections = [
+  {
+    eyebrow: "Core services",
+    title: "Software and AI, led by SaaS",
+    lead: "Our main offer. Each one ends with working software, the code and the documentation.",
+    items: coreServices,
+  },
+  {
+    eyebrow: "Specialist engineering",
+    title: "Data, models and infrastructure",
+    lead: "Available on their own, or as part of a core project.",
+    items: engineeringServices,
+  },
+];
 
 const engagements = [
   {
@@ -34,31 +49,39 @@ export default function ServicesPage() {
         lead="We lead with SaaS and AI, and every engagement ends with working software you own."
       />
 
-      <div className="site-container py-section">
-        <div className="space-y-4">
-          {services.map((service) => (
-            <Reveal key={service.slug}>
-              <Link
-                href={`/services/${service.slug}`}
-                className="grid items-center gap-8 rounded-lg border border-line bg-surface p-6 transition-colors hover:border-line-strong md:grid-cols-12 md:p-8"
-              >
-                <div className="md:col-span-7">
-                  <h2 className="text-h2">{service.name}</h2>
-                  <p className="mt-3 max-w-lg text-muted">{service.summary}</p>
-                  <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-1 font-mono text-xs text-subtle">
-                    {service.builds.map((build) => (
-                      <li key={build.title}>{build.title}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="md:col-span-5">
-                  <ServiceIllustration slug={service.slug} />
-                </div>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
-      </div>
+      {serviceSections.map((section, sectionIndex) => (
+        <section
+          key={section.title}
+          className={sectionIndex > 0 ? "border-t border-line py-section" : "py-section"}
+        >
+          <div className="site-container">
+            <SectionHeader eyebrow={section.eyebrow} title={section.title} lead={section.lead} />
+            <div className="mt-10 space-y-4">
+              {section.items.map((service) => (
+                <Reveal key={service.slug}>
+                  <Link
+                    href={`/services/${service.slug}`}
+                    className="grid items-center gap-8 rounded-lg border border-line bg-surface p-6 transition-colors hover:border-line-strong md:grid-cols-12 md:p-8"
+                  >
+                    <div className="md:col-span-7">
+                      <h3 className="text-h2">{service.name}</h3>
+                      <p className="mt-3 max-w-lg text-muted">{service.summary}</p>
+                      <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-1 font-mono text-xs text-subtle">
+                        {service.builds.map((build) => (
+                          <li key={build.title}>{build.title}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="md:col-span-5">
+                      <ServiceIllustration slug={service.slug} />
+                    </div>
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      ))}
 
       <section className="border-t border-line py-section">
         <div className="site-container grid gap-10 lg:grid-cols-12">

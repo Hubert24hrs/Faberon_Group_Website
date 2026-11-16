@@ -147,7 +147,7 @@ export function Navbar() {
                       All services
                     </Link>
                   </div>
-                  <ul className="col-span-9 grid grid-cols-2 gap-2">
+                  <ul className="col-span-9 grid grid-cols-3 gap-2">
                     {services.map((service) => (
                       <li key={service.slug}>
                         <Link

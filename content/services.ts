@@ -1,5 +1,13 @@
 export type ServiceSlug =
-  "custom-saas" | "ai-agents" | "ai-automation" | "mobile-apps" | "websites";
+  | "custom-saas"
+  | "ai-agents"
+  | "ai-automation"
+  | "mobile-apps"
+  | "websites"
+  | "machine-learning"
+  | "data-solutions"
+  | "full-stack-development"
+  | "cloud-devops";
 
 export type Service = {
   slug: ServiceSlug;
@@ -12,7 +20,8 @@ export type Service = {
   receive: string[];
 };
 
-export const services: Service[] = [
+// The main offer: what the home page grid shows.
+export const coreServices: Service[] = [
   {
     slug: "custom-saas",
     name: "Custom SaaS",
@@ -236,6 +245,208 @@ export const services: Service[] = [
     ],
   },
 ];
+
+// Specialist work, offered on its own or as part of a core project.
+export const engineeringServices: Service[] = [
+  {
+    slug: "machine-learning",
+    name: "AI and machine learning",
+    navBlurb: "Models trained on your data, deployed and monitored.",
+    headline: "Models that work outside the notebook",
+    summary:
+      "We train, evaluate and deploy machine learning models on your data, then monitor them in production.",
+    builds: [
+      {
+        title: "Predictive models",
+        detail: "Forecasting, scoring and classification built on your historical data.",
+      },
+      {
+        title: "Natural language processing",
+        detail: "Classification, extraction, search and summaries for documents and messages.",
+      },
+      {
+        title: "Computer vision",
+        detail: "Image and video models for detection, inspection and reading documents.",
+      },
+      {
+        title: "Recommendation systems",
+        detail: "Ranking and recommendations for products, content or next actions.",
+      },
+      {
+        title: "Deep learning",
+        detail: "Neural network models where simpler methods can't reach the accuracy you need.",
+      },
+    ],
+    approach: [
+      {
+        title: "Baseline first",
+        detail: "We measure a simple approach before building a complex one, so you see the gain.",
+      },
+      {
+        title: "Evaluated on your data",
+        detail: "We agree the metrics up front and test on data the model hasn't seen.",
+      },
+      {
+        title: "MLOps from day one",
+        detail: "Models ship with versioning, deployment pipelines and drift monitoring.",
+      },
+    ],
+    receive: [
+      "Trained models and the code that produces them",
+      "An evaluation report against the agreed metrics",
+      "Deployment and monitoring on your infrastructure",
+      "Documentation for retraining and updates",
+    ],
+  },
+  {
+    slug: "data-solutions",
+    name: "Data solutions",
+    navBlurb: "Pipelines, warehouses and dashboards your team can trust.",
+    headline: "Data your team can trust",
+    summary:
+      "We design data pipelines, warehouses and reporting, so your numbers come from one reliable source.",
+    builds: [
+      {
+        title: "Data pipelines",
+        detail: "ETL and ELT pipelines that move and clean data from your systems.",
+      },
+      {
+        title: "Data warehousing",
+        detail: "Cloud data platforms that bring your sources together in one place.",
+      },
+      {
+        title: "Analytics and business intelligence",
+        detail: "Dashboards and reports on the metrics your team makes decisions on.",
+      },
+      {
+        title: "Big data processing",
+        detail: "Processing for data volumes that outgrow a single database.",
+      },
+      {
+        title: "Database design",
+        detail: "SQL and NoSQL schemas designed for how your application reads and writes.",
+      },
+    ],
+    approach: [
+      {
+        title: "Sources mapped first",
+        detail: "We document where each number comes from before moving any data.",
+      },
+      {
+        title: "Quality checks built in",
+        detail: "Pipelines test the data as it moves and alert someone when it looks wrong.",
+      },
+      {
+        title: "One definition per metric",
+        detail: "We agree what each metric means, so reports stop disagreeing.",
+      },
+    ],
+    receive: [
+      "Working pipelines on your accounts",
+      "A documented data model",
+      "Dashboards and reports",
+      "Runbooks for when a pipeline fails",
+    ],
+  },
+  {
+    slug: "full-stack-development",
+    name: "Full-stack development",
+    navBlurb: "Frontend, backend and APIs, built to grow with your users.",
+    headline: "Frontend to database, one team",
+    summary:
+      "We build the frontend, backend and APIs of your web application, designed to grow with your users.",
+    builds: [
+      {
+        title: "Web applications",
+        detail: "Complete applications, from the interface to the database.",
+      },
+      {
+        title: "Frontend development",
+        detail: "Fast, accessible interfaces that work on every screen size.",
+      },
+      {
+        title: "Backend and APIs",
+        detail: "REST and GraphQL APIs with clear contracts and documentation.",
+      },
+      {
+        title: "Authentication and access control",
+        detail: "Sign-in, roles and permissions that limit each user to what they should see.",
+      },
+      {
+        title: "Scalable system design",
+        detail: "Architecture planned for your expected load, and for growth beyond it.",
+      },
+    ],
+    approach: [
+      {
+        title: "Contracts before code",
+        detail: "We agree how the frontend and backend talk before either is built.",
+      },
+      {
+        title: "Secure from the first version",
+        detail: "Access control, input checks and secrets handling are there from the start.",
+      },
+      {
+        title: "Built to be maintained",
+        detail: "Tests and documentation let your team change the code safely.",
+      },
+    ],
+    receive: [
+      "Source code in a repository you control",
+      "API documentation",
+      "Automated tests",
+      "A handover session with your team",
+    ],
+  },
+  {
+    slug: "cloud-devops",
+    name: "Cloud and DevOps",
+    navBlurb: "Deployment, CI/CD and monitoring on AWS, Azure or GCP.",
+    headline: "Infrastructure you can ship on",
+    summary:
+      "We set up cloud infrastructure, deployment pipelines and monitoring on AWS, Azure or Google Cloud.",
+    builds: [
+      {
+        title: "Cloud deployment",
+        detail: "Production environments on AWS, Azure or Google Cloud, on your accounts.",
+      },
+      {
+        title: "Containers",
+        detail: "Docker images and container hosting, so the app runs the same everywhere.",
+      },
+      {
+        title: "CI/CD pipelines",
+        detail: "Automated tests and deployments on every change, with a way to roll back.",
+      },
+      {
+        title: "Monitoring and performance",
+        detail: "Alerts, logs and tuning, so problems surface before users report them.",
+      },
+    ],
+    approach: [
+      {
+        title: "Infrastructure as code",
+        detail: "Your setup is written down in code, so it can be reviewed and rebuilt.",
+      },
+      {
+        title: "Least privilege",
+        detail: "Every service and person gets only the access they need.",
+      },
+      {
+        title: "Costs you can see",
+        detail: "We tag resources and set budgets, so cloud bills don't surprise you.",
+      },
+    ],
+    receive: [
+      "Infrastructure on your cloud accounts",
+      "A deployment pipeline",
+      "Monitoring and alerts",
+      "Runbooks and an access handover",
+    ],
+  },
+];
+
+export const services: Service[] = [...coreServices, ...engineeringServices];
 
 export function getService(slug: string) {
   return services.find((service) => service.slug === slug);
