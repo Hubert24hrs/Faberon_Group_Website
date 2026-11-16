@@ -1,6 +1,6 @@
 import { ButtonLink } from "@/components/ui/button";
 import { primaryCta, site } from "@/lib/site";
-import { AgentConsole } from "./agent-console";
+import { HeroShowcase } from "./hero-showcase";
 
 export function Hero() {
   return (
@@ -26,7 +26,7 @@ export function Hero() {
           </div>
         </div>
         <div className="lg:col-span-6">
-          <AgentConsole />
+          <HeroShowcase />
         </div>
       </div>
     </section>
