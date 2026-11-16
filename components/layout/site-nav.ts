@@ -38,6 +38,7 @@ export const siteNav: NavSection[] = [
       { label: "Who we build for", href: "/#who-we-build-for" },
       { label: "How we work", href: "/#process" },
       { label: "Engineering principles", href: "/#principles" },
+      { label: "What clients say", href: "/#testimonials" },
       { label: "Questions and answers", href: "/#faq" },
     ],
   },
