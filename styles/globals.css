@@ -95,14 +95,7 @@
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
-    scroll-padding-top: calc(var(--nav-height) + var(--nav-row, 0px) + 1.5rem);
-  }
-
-  /* Below lg the site navigation is a second row of the menu bar. */
-  @media (max-width: 1023px) {
-    html {
-      --nav-row: 72px;
-    }
+    scroll-padding-top: calc(var(--nav-height) + 1.5rem);
   }
 
   body {
@@ -210,6 +203,24 @@
   [data-theme="light"] .theme-icon-sun {
     display: none;
   }
+}
+
+/* The full menu slides in from the right. */
+@keyframes sheet-in {
+  from {
+    transform: translateX(100%);
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+.menu-sheet {
+  animation: sheet-in 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.menu-scrim {
+  animation: fade-in 0.25s ease both;
 }
 
 @keyframes marquee {

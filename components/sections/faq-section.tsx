@@ -15,7 +15,7 @@ export function FaqSection({
   title?: string;
 }) {
   return (
-    <section className="border-t border-line py-section">
+    <section id="faq" className="border-t border-line py-section">
       <JsonLd data={faqJsonLd(faqs)} />
       <div className="site-container grid gap-10 lg:grid-cols-12">
         <Reveal className="lg:col-span-4">

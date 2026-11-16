@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 export function AgentsSpotlight() {
   return (
-    <section className="border-y border-line bg-surface py-section">
+    <section id="ai-agents" className="border-y border-line bg-surface py-section">
       <div className="site-container">
         <Reveal>
           <SectionHeader

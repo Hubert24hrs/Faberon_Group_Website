@@ -26,7 +26,7 @@ export default function AboutPage() {
         lead={`${site.legalName} is a technology company based in Lagos, Nigeria, building software and AI for clients globally.`}
       />
 
-      <section className="py-section">
+      <section id="why-we-exist" className="py-section">
         <div className="site-container grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <p className="eyebrow">Why we exist</p>
@@ -69,7 +69,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="border-y border-line bg-surface py-section">
+      <section id="mission" className="border-y border-line bg-surface py-section">
         <div className="site-container grid gap-10 md:grid-cols-2">
           <Reveal>
             <p className="eyebrow">Mission</p>
@@ -105,7 +105,7 @@ export default function AboutPage() {
 
       <LeadershipSection />
 
-      <section className="border-t border-line py-section">
+      <section id="company-information" className="border-t border-line py-section">
         <div className="site-container grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <p className="eyebrow">Company information</p>

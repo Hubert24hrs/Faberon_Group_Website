@@ -45,13 +45,13 @@ const PAD = 14; // canvas bleed around the pill, for shadows and ripples
 const IDLE_MS = 4000; // ambient water stops this long after the last interaction
 
 const NIMBUS_CSS = `
-.nimbus-nav{--n-tint:rgba(255,255,255,.55);--n-fg:#0e1116;--n-fg-soft:rgba(14,17,22,.62);--n-rim:rgba(255,255,255,.8);
+.nimbus-nav{--n-tint:rgba(255,255,255,.55);--n-fg:#0e1116;--n-fg-soft:rgba(14,17,22,.62);--n-rim:rgba(255,255,255,.8);--n-edge:rgba(10,32,56,.1);
   position:relative;display:inline-flex;align-items:center;gap:2px;padding:6px;border-radius:999px;isolation:isolate;
   font-family:var(--font-geist-sans),ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased;user-select:none;-webkit-tap-highlight-color:transparent}
-.nimbus-nav[data-tone="dark"]{--n-tint:rgba(18,21,27,.55);--n-fg:#eceef2;--n-fg-soft:rgba(236,238,242,.68);--n-rim:rgba(255,255,255,.3)}
+.nimbus-nav[data-tone="dark"]{--n-tint:rgba(18,21,27,.55);--n-fg:#eceef2;--n-fg-soft:rgba(236,238,242,.68);--n-rim:rgba(255,255,255,.3);--n-edge:rgba(255,255,255,.18)}
 .nimbus-glass{position:absolute;inset:0;border-radius:inherit;z-index:-2;overflow:hidden;background:var(--n-tint);
   -webkit-backdrop-filter:blur(14px) saturate(1.3) brightness(1.06);backdrop-filter:blur(14px) saturate(1.3) brightness(1.06);
-  box-shadow:inset 0 1px 1px var(--n-rim),inset 0 0 0 1px rgba(255,255,255,.18),0 12px 32px -14px rgba(0,20,50,.55),0 2px 6px rgba(0,20,50,.12)}
+  box-shadow:inset 0 1px 1px var(--n-rim),inset 0 0 0 1px var(--n-edge),0 12px 32px -14px rgba(0,20,50,.55),0 2px 6px rgba(0,20,50,.12)}
 .nimbus-nav[data-refract="on"] .nimbus-glass{-webkit-backdrop-filter:url(#nimbus-refract) blur(3px) saturate(1.3) brightness(1.06);backdrop-filter:url(#nimbus-refract) blur(3px) saturate(1.3) brightness(1.06)}
 .nimbus-water{position:absolute;left:${-PAD}px;top:${-PAD}px;z-index:-1;pointer-events:none}
 .nimbus-nav[data-gl="off"] .nimbus-water{display:none}
@@ -252,6 +252,9 @@ export function LiquidNavbar({
     setPending(null);
   }
   const current = pending ?? active ?? inner;
+  // With a mouse, the water drop flows to the item under the pointer, then back to the current page.
+  const [hover, setHover] = React.useState<number | null>(null);
+  const shown = hover ?? current;
 
   const navRef = React.useRef<HTMLElement>(null);
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
@@ -435,7 +438,7 @@ export function LiquidNavbar({
         cv.style.height = `${Hh}px`;
       }
     }
-    const el = current >= 0 ? itemRefs.current[current] : undefined;
+    const el = shown >= 0 ? itemRefs.current[shown] : undefined;
     s.none = !el;
     if (!el) {
       s.ready = false;
@@ -459,7 +462,7 @@ export function LiquidNavbar({
     }
     T.x = nx;
     loop();
-  }, [current, loop]);
+  }, [shown, loop]);
 
   React.useEffect(() => {
     const s = st.current;
@@ -577,7 +580,7 @@ export function LiquidNavbar({
       className={["nimbus-nav", className].filter(Boolean).join(" ")}
       data-tone={tone}
       data-gl="on"
-      data-none={current < 0 || undefined}
+      data-none={shown < 0 || undefined}
       data-compact={compact === undefined ? undefined : String(compact)}
       data-refract={refract ? "on" : "off"}
       aria-label={ariaLabel}
@@ -585,6 +588,7 @@ export function LiquidNavbar({
       onPointerMove={onMove}
       onPointerLeave={() => {
         st.current.mouse.on = false;
+        setHover(null);
         loop();
       }}
       onPointerDown={(e) => {
@@ -650,6 +654,9 @@ export function LiquidNavbar({
           "aria-current": i === current ? ("page" as const) : undefined,
           "aria-label": item.label,
           onClick: () => select(i),
+          onPointerEnter: (e: React.PointerEvent) => {
+            if (e.pointerType === "mouse") setHover(i);
+          },
         };
         return item.href ? (
           <Link

@@ -35,3 +35,4 @@ Status as of 16 November 2026. "Site" items are built and live. "Owner" items ne
 
 - **Booking:** the Cal.com embed is built but hidden until `NEXT_PUBLIC_BOOKING_URL` is set.
 - **AI chat assistant:** Phase 2 in `docs/UPGRADE_PLAN.md`. It needs an Anthropic API key. Neither Apple nor Google requires it.
+- **Testimonials:** the page and its 3D corridor are built but switched off. Add real, approved quotes to `content/testimonials.ts` and they go live, with the menu item, automatically.

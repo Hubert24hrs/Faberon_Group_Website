@@ -8,6 +8,7 @@ const company = [
   { label: "About Us", href: "/about" },
   { label: "Leadership", href: "/about#leadership" },
   { label: "Solutions", href: "/solutions" },
+  ...(features.testimonials ? [{ label: "Testimonials", href: "/testimonials" }] : []),
   ...(features.work ? [{ label: "Work", href: "/work" }] : []),
   ...(features.insights ? [{ label: "Insights", href: "/insights" }] : []),
   { label: "Contact", href: "/contact" },
