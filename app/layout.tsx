@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import type { ReactNode } from "react";
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Footer } from "@/components/layout/footer";
+import { GlassDock } from "@/components/layout/glass-dock";
 import { Navbar } from "@/components/layout/navbar";
 import { themeScript } from "@/components/layout/theme-toggle";
 import { Analytics } from "@/components/analytics/analytics";
@@ -83,6 +84,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Navbar />
         <main id="main">{children}</main>
         <Footer />
+        {/* Room for the floating dock, so it never covers the footer. */}
+        <div aria-hidden className="h-24 print:hidden" />
+        <GlassDock />
         <Analytics domain={clientEnv.NEXT_PUBLIC_PLAUSIBLE_DOMAIN} />
       </body>
     </html>
