@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { services } from "@/content/services";
 import { ButtonLink } from "@/components/ui/button";
-import { features, primaryCta, site } from "@/lib/site";
+import { demoCta, features, primaryCta, site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { ServiceIcon } from "./service-icon";
 import { ThemeToggle } from "./theme-toggle";
@@ -99,7 +99,7 @@ export function Navbar() {
           : "border-transparent",
       )}
     >
-      <div className="site-container flex h-[var(--nav-height)] items-center justify-between gap-4">
+      <div className="site-container flex h-[var(--nav-height)] items-center justify-between gap-2 sm:gap-4">
         <Link href="/" aria-label={`${site.legalName} home`} className="-m-1 rounded p-1 text-ink">
           <Logo />
         </Link>
@@ -184,9 +184,14 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-1 sm:gap-2">
-          <ThemeToggle />
-          <ButtonLink href={primaryCta.href} className="h-10 px-4 text-sm max-sm:hidden">
-            {primaryCta.label}
+          <span className="max-sm:hidden">
+            <ThemeToggle />
+          </span>
+          <ButtonLink
+            href={demoCta.href}
+            className="h-9! px-2.5! text-xs! max-[359px]:hidden sm:h-10! sm:px-4! sm:text-sm!"
+          >
+            {demoCta.label}
           </ButtonLink>
           <button
             ref={drawerButtonRef}
@@ -259,9 +264,23 @@ export function Navbar() {
                 </li>
               ))}
             </ul>
-            <ButtonLink href={primaryCta.href} onClick={closeDrawer} className="mt-8 w-full">
-              {primaryCta.label}
-            </ButtonLink>
+            <div className="mt-8 space-y-3">
+              <ButtonLink href={demoCta.href} onClick={closeDrawer} className="w-full">
+                {demoCta.label}
+              </ButtonLink>
+              <ButtonLink
+                href={primaryCta.href}
+                onClick={closeDrawer}
+                variant="secondary"
+                className="w-full"
+              >
+                {primaryCta.label}
+              </ButtonLink>
+            </div>
+            <div className="mt-6 flex items-center justify-between border-t border-line pt-4 text-sm text-muted">
+              Theme
+              <ThemeToggle />
+            </div>
           </nav>
         </div>
       ) : null}

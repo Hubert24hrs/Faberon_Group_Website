@@ -17,15 +17,17 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "invalid" }, { status: 400 });
   }
 
-  const { name, email, company, service, budget, message, website } = parsed.data;
+  const { name, email, company, service, budget, message, intent, website } = parsed.data;
+  const requestType = intent === "demo" ? "Demo request" : "Consultation request";
 
   // Bots get a normal response, so they don't learn the field is a trap.
   if (website) return NextResponse.json({ ok: true });
 
   const result = await sendTeamEmail({
-    subject: `Consultation request: ${company}`,
+    subject: `${requestType}: ${company}`,
     replyTo: email,
     text: [
+      `Request type: ${requestType}`,
       `Name: ${name}`,
       `Email: ${email}`,
       `Company: ${company}`,

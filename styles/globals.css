@@ -38,6 +38,11 @@
   --gutter: clamp(1rem, 0.5rem + 2.5vw, 2rem);
   --space-section: clamp(4.5rem, 3rem + 7vw, 8rem);
   --nav-height: 64px;
+
+  /* Logo colours. The same in both themes. */
+  --brand-navy: #0a2038;
+  --brand-cream: #f3f1e4;
+  --brand-gold: #d5a63a;
 }
 
 @media (prefers-color-scheme: light) {
@@ -183,9 +188,24 @@
     animation: step-enter 320ms ease-out both;
   }
 
+  .marquee-track {
+    animation: marquee 45s linear infinite;
+  }
+
+  .announcement:hover .marquee-track,
+  .announcement:focus-visible .marquee-track {
+    animation-play-state: paused;
+  }
+
   [data-theme="dark"] .theme-icon-moon,
   [data-theme="light"] .theme-icon-sun {
     display: none;
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
   }
 }
 
@@ -212,5 +232,9 @@
   [data-reveal] {
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  .marquee-track {
+    animation: none !important;
   }
 }

@@ -83,6 +83,7 @@ export const contactSchema = z.object({
     .trim()
     .min(20, "Tell us a little more, at least 20 characters")
     .max(4000, "Keep your message under 4,000 characters"),
+  intent: z.enum(["consultation", "demo"]).optional(),
   // Honeypot. Hidden from people, so anything here came from a bot.
   website: z.string().max(200).optional(),
 });

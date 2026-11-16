@@ -3,6 +3,7 @@ import { GeistSans } from "geist/font/sans";
 import localFont from "next/font/local";
 import Script from "next/script";
 import type { ReactNode } from "react";
+import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
 import { themeScript } from "@/components/layout/theme-toggle";
@@ -79,6 +80,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           Skip to content
         </a>
         <JsonLd data={organizationJsonLd()} />
+        <AnnouncementBar />
         <Navbar />
         <main id="main">{children}</main>
         <Footer />

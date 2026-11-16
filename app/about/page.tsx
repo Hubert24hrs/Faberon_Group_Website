@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/motion/reveal";
 import { FinalCta } from "@/components/sections/final-cta";
+import { LeadershipSection } from "@/components/sections/leadership-section";
 import { CompanyDetails } from "@/components/ui/company-details";
 import { PageHeader } from "@/components/ui/page-header";
 import { values } from "@/content/company";
@@ -99,6 +100,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <LeadershipSection />
 
       <section className="border-t border-line py-section">
         <div className="site-container grid gap-10 lg:grid-cols-12">

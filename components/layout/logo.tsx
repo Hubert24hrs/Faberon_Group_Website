@@ -29,7 +29,7 @@ export function Logo({ className, large = false }: { className?: string; large?:
   return (
     <span className={cn("flex items-center gap-2.5", className)}>
       <LogoMark className={large ? "size-10" : undefined} />
-      <span className="block leading-none">
+      <span className="block leading-none whitespace-nowrap">
         <span
           className={cn(
             "block font-display font-semibold tracking-tight",

@@ -42,7 +42,11 @@ function Field({
   );
 }
 
-export function ConsultationForm() {
+export function ConsultationForm({
+  intent = "consultation",
+}: {
+  intent?: "consultation" | "demo";
+}) {
   const [status, setStatus] = useState<Status>("idle");
   const {
     register,
@@ -57,7 +61,7 @@ export function ConsultationForm() {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify({ ...values, intent }),
       });
       if (response.ok) {
         setStatus("success");
@@ -205,7 +209,11 @@ export function ConsultationForm() {
           </p>
         ) : null}
         <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto">
-          {isSubmitting ? "Sending" : "Request a consultation"}
+          {isSubmitting
+            ? "Sending"
+            : intent === "demo"
+              ? "Request a demo"
+              : "Request a consultation"}
         </Button>
       </div>
     </form>

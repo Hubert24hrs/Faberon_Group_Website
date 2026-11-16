@@ -6,6 +6,7 @@ import { Logo } from "./logo";
 
 const company = [
   { label: "About Us", href: "/about" },
+  { label: "Leadership", href: "/about#leadership" },
   { label: "Solutions", href: "/solutions" },
   ...(features.work ? [{ label: "Work", href: "/work" }] : []),
   ...(features.insights ? [{ label: "Insights", href: "/insights" }] : []),

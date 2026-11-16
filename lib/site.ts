@@ -70,3 +70,4 @@ export const features = {
 };
 
 export const primaryCta = { label: "Book a consultation", href: "/contact" };
+export const demoCta = { label: "Request a demo", href: "/demo" };
