@@ -1,12 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { GeistSans } from "geist/font/sans";
 import localFont from "next/font/local";
-import Script from "next/script";
 import type { ReactNode } from "react";
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
 import { themeScript } from "@/components/layout/theme-toggle";
+import { Analytics } from "@/components/analytics/analytics";
+import { clientEnv } from "@/lib/env";
 import { JsonLd, organizationJsonLd } from "@/lib/seo";
 import { site } from "@/lib/site";
 import "@/styles/globals.css";
@@ -57,8 +58,6 @@ export const viewport: Viewport = {
   ],
 };
 
-const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
-
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
@@ -84,14 +83,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Navbar />
         <main id="main">{children}</main>
         <Footer />
-        {plausibleDomain ? (
-          <Script
-            defer
-            data-domain={plausibleDomain}
-            src="https://plausible.io/js/script.js"
-            strategy="afterInteractive"
-          />
-        ) : null}
+        <Analytics domain={clientEnv.NEXT_PUBLIC_PLAUSIBLE_DOMAIN} />
       </body>
     </html>
   );

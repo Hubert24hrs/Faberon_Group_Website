@@ -1,16 +1,25 @@
-import { Plus } from "lucide-react";
+import { ArrowRight, Plus } from "lucide-react";
+import Link from "next/link";
 import { Reveal } from "@/components/motion/reveal";
 import { SectionHeader } from "@/components/ui/section-header";
-import { faqs } from "@/content/company";
+import { faqs as homeFaqs } from "@/content/company";
+import type { Faq } from "@/content/faqs";
 import { JsonLd, faqJsonLd } from "@/lib/seo";
 
-export function FaqSection() {
+// Each page should render at most one FaqSection, since it emits FAQPage data.
+export function FaqSection({
+  faqs = homeFaqs,
+  title = "Questions we get asked",
+}: {
+  faqs?: Faq[];
+  title?: string;
+}) {
   return (
     <section className="border-t border-line py-section">
       <JsonLd data={faqJsonLd(faqs)} />
       <div className="site-container grid gap-10 lg:grid-cols-12">
         <Reveal className="lg:col-span-4">
-          <SectionHeader eyebrow="FAQ" title="Questions we get asked" />
+          <SectionHeader eyebrow="FAQ" title={title} />
         </Reveal>
         <div className="lg:col-span-8">
           {faqs.map((faq) => (
@@ -23,7 +32,18 @@ export function FaqSection() {
                   aria-hidden
                 />
               </summary>
-              <p className="max-w-prose pb-5 text-muted">{faq.answer}</p>
+              <div className="max-w-prose pb-5">
+                <p className="text-muted">{faq.answer}</p>
+                {faq.link ? (
+                  <Link
+                    href={faq.link.href}
+                    className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-accent-text hover:underline"
+                  >
+                    {faq.link.label}
+                    <ArrowRight className="size-3.5" strokeWidth={1.75} aria-hidden />
+                  </Link>
+                ) : null}
+              </div>
             </details>
           ))}
         </div>

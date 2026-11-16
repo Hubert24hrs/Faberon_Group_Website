@@ -61,6 +61,9 @@ export const budgetOptions = [
   "Not yet sure",
 ] as const;
 
+export const messageMinLength = 20;
+export const messageMaxLength = 4000;
+
 // Single-line fields end up in email headers, so line breaks are rejected.
 const singleLine = (label: string, max: number) =>
   z
@@ -81,14 +84,36 @@ export const contactSchema = z.object({
   message: z
     .string()
     .trim()
-    .min(20, "Tell us a little more, at least 20 characters")
-    .max(4000, "Keep your message under 4,000 characters"),
+    .min(messageMinLength, `Tell us a little more, at least ${messageMinLength} characters`)
+    .max(messageMaxLength, "Keep your message under 4,000 characters"),
   intent: z.enum(["consultation", "demo"]).optional(),
   // Honeypot. Hidden from people, so anything here came from a bot.
   website: z.string().max(200).optional(),
 });
 
 export type ContactInput = z.infer<typeof contactSchema>;
+
+const attributionField = z.string().trim().max(500).optional();
+
+export const attributionSchema = z.object({
+  utmSource: attributionField,
+  utmMedium: attributionField,
+  utmCampaign: attributionField,
+  utmTerm: attributionField,
+  utmContent: attributionField,
+  referrer: attributionField,
+  landingPage: attributionField,
+});
+
+export type Attribution = z.infer<typeof attributionSchema>;
+
+export const leadSchema = contactSchema.extend({
+  attribution: attributionSchema.optional(),
+  page: z.string().trim().max(200).optional(),
+  turnstileToken: z.string().max(2048).optional(),
+});
+
+export type LeadInput = z.infer<typeof leadSchema>;
 
 export const newsletterSchema = z.object({
   email: z.email("Enter a valid email address").max(254),

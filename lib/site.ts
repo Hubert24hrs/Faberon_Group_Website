@@ -1,3 +1,5 @@
+import { clientEnv } from "@/lib/env";
+
 export type SocialLink = { label: string; href: string };
 
 type PostalAddress = {
@@ -35,7 +37,7 @@ export const site: SiteConfig = {
   tagline: "Our team's best work. Software and AI you own.",
   description:
     "Faberon Group Technologies Limited designs and builds custom SaaS, AI agents, automation, mobile apps and websites, plus machine learning, data and cloud engineering, then hands over the code and documentation.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://faberongroups.com",
+  url: clientEnv.NEXT_PUBLIC_SITE_URL ?? "https://faberongroups.com",
   base: "Lagos, Nigeria",
   contact: {
     email: "info@faberongroups.com",

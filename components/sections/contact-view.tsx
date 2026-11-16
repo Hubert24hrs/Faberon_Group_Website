@@ -1,6 +1,8 @@
 import { ConsultationForm } from "@/components/forms/consultation-form";
+import { FaqSection } from "@/components/sections/faq-section";
 import { CompanyDetails } from "@/components/ui/company-details";
 import { PageHeader } from "@/components/ui/page-header";
+import { contactFaqs } from "@/content/faqs";
 import { getBookingUrl } from "@/lib/booking";
 
 const copy = {
@@ -36,7 +38,7 @@ export function ContactView({ intent }: { intent: "consultation" | "demo" }) {
 
       <div className="site-container grid gap-12 py-section lg:grid-cols-12">
         <div className="lg:col-span-7">
-          <ConsultationForm intent={intent} />
+          <ConsultationForm intent={intent} nextSteps={text.steps} />
         </div>
 
         <aside className="space-y-10 lg:col-span-5">
@@ -78,6 +80,8 @@ export function ContactView({ intent }: { intent: "consultation" | "demo" }) {
           </div>
         </section>
       ) : null}
+
+      <FaqSection faqs={contactFaqs} title="Before you get in touch" />
     </>
   );
 }

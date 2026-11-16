@@ -3,10 +3,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Reveal } from "@/components/motion/reveal";
+import { FaqSection } from "@/components/sections/faq-section";
 import { FinalCta } from "@/components/sections/final-cta";
 import { ServiceIllustration } from "@/components/sections/service-illustrations";
 import { ButtonLink } from "@/components/ui/button";
 import { PageHeader } from "@/components/ui/page-header";
+import { serviceFaqs } from "@/content/faqs";
 import { getService, services } from "@/content/services";
 import { JsonLd, serviceJsonLd } from "@/lib/seo";
 import { primaryCta } from "@/lib/site";
@@ -38,7 +40,16 @@ export default async function ServicePage({ params }: Props) {
   return (
     <>
       <JsonLd data={serviceJsonLd(service)} />
-      <PageHeader eyebrow={service.name} title={service.headline} lead={service.summary}>
+      <PageHeader
+        eyebrow={service.name}
+        title={service.headline}
+        lead={service.summary}
+        breadcrumbs={[
+          { name: "Home", href: "/" },
+          { name: "Services", href: "/services" },
+          { name: service.name, href: `/services/${service.slug}` },
+        ]}
+      >
         <ButtonLink href={primaryCta.href} className="mt-8">
           {primaryCta.label}
         </ButtonLink>
@@ -120,6 +131,8 @@ export default async function ServicePage({ params }: Props) {
           </ul>
         </div>
       </section>
+
+      <FaqSection faqs={serviceFaqs[service.slug]} title={`${service.name}: common questions`} />
 
       <FinalCta />
     </>
