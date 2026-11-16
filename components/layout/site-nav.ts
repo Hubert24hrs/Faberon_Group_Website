@@ -10,7 +10,7 @@ import {
 import type { NimbusFx } from "@/components/ui/liquid-glass-navbar";
 import { services } from "@/content/services";
 import { audiences } from "@/content/company";
-import { demoCta, features, primaryCta, site, telHref } from "@/lib/site";
+import { demoCta, primaryCta, site, telHref } from "@/lib/site";
 
 export type NavLink = { label: string; href: string; external?: boolean };
 
@@ -73,17 +73,16 @@ export const siteNav: NavSection[] = [
       { label: "Company information", href: "/about#company-information" },
     ],
   },
-  ...(features.testimonials
-    ? [
-        {
-          label: "Testimonials",
-          href: "/testimonials",
-          icon: MessageSquareQuote,
-          fx: "drop" as const,
-          links: [{ label: "What clients say", href: "/testimonials" }],
-        },
-      ]
-    : []),
+  {
+    label: "Testimonials",
+    href: "/testimonials",
+    icon: MessageSquareQuote,
+    fx: "drop",
+    links: [
+      { label: "What clients say", href: "/testimonials" },
+      { label: "Share your experience", href: "/testimonials#client-testimonials" },
+    ],
+  },
   {
     label: "Contact",
     href: "/contact",

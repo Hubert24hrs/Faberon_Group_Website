@@ -3,9 +3,17 @@
 import { gsap } from "gsap";
 import { Globe } from "lucide-react";
 import { useEffect, useRef } from "react";
-import type { Testimonial } from "@/content/testimonials";
 
-// An endless 3D corridor: testimonial cards drift from the far distance past the viewer,
+/** One card in the corridor: a client quote, or a short statement with a label. */
+export type CorridorCard = {
+  /** Shown above the text instead of a quote mark, e.g. "Our commitment". */
+  kicker?: string;
+  text: string;
+  title: string;
+  detail?: string;
+};
+
+// An endless 3D corridor: cards drift from the far distance past the viewer,
 // alternating left and right walls. Adapted from the "Endless" GSAP component, with cards
 // in place of stock images, theme tokens, an off-screen pause and reduced-motion support.
 
@@ -29,6 +37,7 @@ const css = `
   border:1px solid color-mix(in oklab,var(--brand-gold) 28%,var(--line));
   background:linear-gradient(160deg,color-mix(in oklab,var(--surface) 92%,var(--brand-gold)) 0%,var(--surface) 55%,color-mix(in oklab,var(--surface) 85%,var(--brand-navy)) 100%);
   box-shadow:0 1.5em 3em -1em rgb(0 0 0/.45);transform:translateZ(0)}
+.endless-kicker{font-family:var(--font-geist-mono),monospace;font-size:.62em;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-text,var(--brand-gold))}
 .endless-mark{font-family:var(--font-general-sans),serif;font-size:3.2em;line-height:.8;height:.55em;color:var(--brand-gold)}
 .endless-quote{margin-top:.7em;font-size:1em;line-height:1.45;color:var(--ink);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:8;overflow:hidden}
 .endless-by{margin-top:auto;padding-top:.9em;border-top:1px solid var(--line)}
@@ -61,7 +70,7 @@ function getLayout(width: number) {
   };
 }
 
-function planesFor(items: Testimonial[]) {
+function planesFor(items: CorridorCard[]) {
   if (items.length === 0) return [];
   const count = Math.max(MIN_PLANES, items.length + (items.length % 2));
   return Array.from({ length: count }, (_, index) => items[index % items.length]!);
@@ -72,7 +81,7 @@ export function Endless({
   title,
   caption,
 }: {
-  items: Testimonial[];
+  items: CorridorCard[];
   title: string;
   caption?: string;
 }) {
@@ -169,15 +178,17 @@ export function Endless({
       <div className="endless-scene" aria-hidden="true">
         <div className="endless-world" ref={worldRef}>
           {planes.map((item, index) => (
-            <div className="endless-plane" key={`${item.name}-${index}`}>
+            <div className="endless-plane" key={`${item.title}-${index}`}>
               <figure className="endless-card">
-                <span className="endless-mark">&ldquo;</span>
-                <blockquote className="endless-quote">{item.quote}</blockquote>
+                {item.kicker ? (
+                  <span className="endless-kicker">{item.kicker}</span>
+                ) : (
+                  <span className="endless-mark">&ldquo;</span>
+                )}
+                <blockquote className="endless-quote">{item.text}</blockquote>
                 <figcaption className="endless-by">
-                  <p className="endless-name">{item.name}</p>
-                  <p className="endless-role">
-                    {item.role}, {item.company}
-                  </p>
+                  <p className="endless-name">{item.title}</p>
+                  {item.detail ? <p className="endless-role">{item.detail}</p> : null}
                 </figcaption>
               </figure>
             </div>
