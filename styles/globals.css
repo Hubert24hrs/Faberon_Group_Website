@@ -95,7 +95,14 @@
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
-    scroll-padding-top: calc(var(--nav-height) + 1.5rem);
+    scroll-padding-top: calc(var(--nav-height) + var(--nav-row, 0px) + 1.5rem);
+  }
+
+  /* Below lg the navigation sits on a second row of the menu bar. */
+  @media (max-width: 1023px) {
+    html {
+      --nav-row: 72px;
+    }
   }
 
   body {
