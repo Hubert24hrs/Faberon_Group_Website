@@ -13,7 +13,6 @@ export type Leader = {
 export const leaders: Leader[] = [
   {
     name: "Idoko Hubert",
-    // TODO: confirm the exact job title.
     role: "Founder",
     headline: "AI & ML Engineer · Full-Stack Developer · Data Solutions Architect",
     photo: {
