@@ -32,6 +32,7 @@ export function SiteLiquidNav({ className }: { className?: string }) {
         active={activeSection(pathname)}
         tone={tone}
         compact={false}
+        dense
         ariaLabel="Main"
       />
     </div>
