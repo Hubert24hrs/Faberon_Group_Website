@@ -13,6 +13,7 @@ export type Testimonial = {
 // Real client testimonials only, each with the client's written permission to publish
 // their name, role and company. Never add sample or invented quotes.
 //
-// The Testimonials page and its menu item switch on automatically once this list
-// has at least one entry, and switch off again if it's emptied.
+// The Testimonials section (homepage and /testimonials) shows these as soon as the list
+// has an entry, with the 3D corridor on /testimonials. While it's empty, the section
+// invites past clients to share their experience instead.
 export const testimonials: Testimonial[] = [];
