@@ -1,10 +1,10 @@
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
-import { ServiceIcon } from "@/components/layout/service-icon";
 import { Reveal } from "@/components/motion/reveal";
 import { SectionHeader } from "@/components/ui/section-header";
-import { coreServices, engineeringServices, type ServiceSlug } from "@/content/services";
+import { coreServices, type ServiceSlug } from "@/content/services";
 import { cn } from "@/lib/utils";
+import { EngineeringFolders } from "./engineering-folders";
 import { ServiceIllustration } from "./service-illustrations";
 
 const tiles: Partial<Record<ServiceSlug, string>> = {
@@ -68,32 +68,18 @@ export function ServicesBento() {
           ))}
         </div>
 
-        <Reveal className="mt-10">
-          <h3 className="eyebrow">Specialist engineering</h3>
-          <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {engineeringServices.map((service) => (
-              <li key={service.slug}>
-                <Link
-                  href={`/services/${service.slug}`}
-                  className="group flex h-full items-start gap-3 rounded-lg border border-line p-4 transition-colors hover:border-line-strong"
-                >
-                  <ServiceIcon
-                    slug={service.slug}
-                    className="mt-0.5 size-5 shrink-0 text-accent-text"
-                  />
-                  <span>
-                    <span className="block font-medium transition-colors group-hover:text-accent-text">
-                      {service.name}
-                    </span>
-                    <span className="mt-0.5 block text-sm leading-snug text-muted">
-                      {service.navBlurb}
-                    </span>
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
+        <div className="mt-16">
+          <div className="max-w-2xl">
+            <h3 className="eyebrow">Specialist engineering</h3>
+            <p className="mt-3 text-muted">
+              Data, models and infrastructure, on their own or inside a core project. Open a folder
+              to see what&apos;s inside.
+            </p>
+          </div>
+          <div className="mt-10">
+            <EngineeringFolders />
+          </div>
+        </div>
       </div>
     </section>
   );
