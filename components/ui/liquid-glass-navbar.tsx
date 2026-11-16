@@ -39,6 +39,8 @@ export type LiquidNavbarProps = {
   compact?: boolean;
   /** Text labels only, with tighter spacing, below 1280px wide. */
   dense?: boolean;
+  /** Phones: text labels only, sized to the screen width so every item fits without scrolling. */
+  fit?: boolean;
   ariaLabel?: string;
   className?: string;
   style?: React.CSSProperties;
@@ -88,6 +90,10 @@ const NIMBUS_CSS = `
 .nimbus-nav[data-compact="true"] .nimbus-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media (max-width:760px){.nimbus-nav:not([data-compact="false"]) .nimbus-item{padding:0 12px}.nimbus-nav:not([data-compact="false"]) .nimbus-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
 @media (max-width:1279px){.nimbus-nav[data-dense="true"] .nv-ico{display:none}.nimbus-nav[data-dense="true"] .nimbus-item{padding:0 12px}}
+/* Fit: type and spacing scale with the screen. Six labels fit from 320px phones up to tablets. */
+.nimbus-nav[data-fit="true"]{padding:4px;gap:0}
+.nimbus-nav[data-fit="true"] .nv-ico{display:none}
+.nimbus-nav[data-fit="true"] .nimbus-item{gap:0;padding:0 clamp(3px,1.2vw,12px);font-size:clamp(9px,3.2vw,14px)}
 /* Without backdrop-filter, a near-solid tint keeps labels readable over any background. */
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.nimbus-glass{background:var(--n-solid)}}
 @media (prefers-reduced-motion:reduce){.nv-ico svg{animation:none!important;transition:none}}
@@ -246,6 +252,7 @@ export function LiquidNavbar({
   tone = "light",
   compact,
   dense,
+  fit,
   ariaLabel = "Main",
   className,
   style,
@@ -591,6 +598,7 @@ export function LiquidNavbar({
       data-none={shown < 0 || undefined}
       data-compact={compact === undefined ? undefined : String(compact)}
       data-dense={dense || undefined}
+      data-fit={fit || undefined}
       data-refract={refract ? "on" : "off"}
       aria-label={ariaLabel}
       onKeyDown={onKeyDown}
