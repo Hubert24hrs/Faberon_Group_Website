@@ -16,9 +16,9 @@ To check the live site at any stage, open a terminal in the project folder and r
 
 The site runs at https://i-dokoai.vercel.app and is consistent with itself there.
 
-| Variable                     | Value                        |
-| ---------------------------- | ---------------------------- |
-| `NEXT_PUBLIC_SITE_URL`       | leave empty                  |
+| Variable                     | Value                       |
+| ---------------------------- | --------------------------- |
+| `NEXT_PUBLIC_SITE_URL`       | leave empty                 |
 | `CANONICAL_REDIRECT_ENABLED` | leave empty (means "false") |
 
 Check:
@@ -78,14 +78,14 @@ The contact, demo, support and deletion forms send email through Resend. Until t
 1. Create a Resend account and add the domain `faberongroups.com`. Resend shows the exact DNS records for sending (SPF and DKIM). Add exactly those at your registrar, then wait until Resend shows the domain as verified.
 2. Set these in Vercel, then redeploy:
 
-| Variable               | Value                                         |
-| ---------------------- | --------------------------------------------- |
-| `RESEND_API_KEY`       | from Resend                                   |
-| `EMAIL_FROM`           | `Faberon Group <no-reply@faberongroups.com>`  |
-| `EMAIL_REPLY_TO`       | `info@faberongroups.com`                      |
-| `LEADS_NOTIFY_EMAIL`   | `info@faberongroups.com`                      |
-| `SUPPORT_NOTIFY_EMAIL` | optional, defaults to `LEADS_NOTIFY_EMAIL`    |
-| `PRIVACY_NOTIFY_EMAIL` | optional, defaults to `LEADS_NOTIFY_EMAIL`    |
+| Variable               | Value                                        |
+| ---------------------- | -------------------------------------------- |
+| `RESEND_API_KEY`       | from Resend                                  |
+| `EMAIL_FROM`           | `Faberon Group <no-reply@faberongroups.com>` |
+| `EMAIL_REPLY_TO`       | `info@faberongroups.com`                     |
+| `LEADS_NOTIFY_EMAIL`   | `info@faberongroups.com`                     |
+| `SUPPORT_NOTIFY_EMAIL` | optional, defaults to `LEADS_NOTIFY_EMAIL`   |
+| `PRIVACY_NOTIFY_EMAIL` | optional, defaults to `LEADS_NOTIFY_EMAIL`   |
 
 3. Send yourself a request from https://faberongroups.com/support and confirm both the team email and the acknowledgement arrive.
 
@@ -95,13 +95,13 @@ The contact, demo, support and deletion forms send email through Resend. Until t
 
 Reviewers compare these documents. **Every entry must match exactly, letter for letter, including punctuation.** Fill in each cell from the document itself.
 
-| Item               | CAC certificate | Dun & Bradstreet record | Website                                                                              | Apple form | Google form |
-| ------------------ | --------------- | ----------------------- | ------------------------------------------------------------------------------------ | ---------- | ----------- |
-| Legal name         |                 |                         | Faberon Group Technologies Limited                                                   |            |             |
+| Item               | CAC certificate | Dun & Bradstreet record | Website                                                                                         | Apple form | Google form |
+| ------------------ | --------------- | ----------------------- | ----------------------------------------------------------------------------------------------- | ---------- | ----------- |
+| Legal name         |                 |                         | Faberon Group Technologies Limited                                                              |            |             |
 | Registered address |                 |                         | House 5, Gate 3, Zion Court Estate, Prince Samuel Adedoyin Street, Ikate, Lekki, Lagos, Nigeria |            |             |
-| Phone              |                 |                         | +234 703 028 8378                                                                    |            |             |
-| Website            |                 |                         | https://faberongroups.com (after stage 3)                                            |            |             |
-| Email              |                 |                         | info@faberongroups.com                                                               |            |             |
+| Phone              |                 |                         | +234 703 028 8378                                                                               |            |             |
+| Website            |                 |                         | https://faberongroups.com (after stage 3)                                                       |            |             |
+| Email              |                 |                         | info@faberongroups.com                                                                          |            |             |
 
 If anything on the website differs from the CAC certificate, change `config/company.ts` and redeploy, rather than changing what you type into the forms.
 
@@ -146,13 +146,13 @@ Sources: https://support.google.com/googleplay/android-developer/answer/13628312
 
 Enter these in App Store Connect and Google Play Console for every app:
 
-| Field                                     | URL                                         |
-| ----------------------------------------- | ------------------------------------------- |
-| Privacy policy                            | https://faberongroups.com/privacy           |
-| Support URL                               | https://faberongroups.com/support           |
-| Account deletion (Google Play)            | https://faberongroups.com/delete-account    |
-| Deletion section of the privacy policy    | https://faberongroups.com/privacy#account-deletion |
-| Marketing URL                             | https://faberongroups.com                   |
+| Field                                  | URL                                                |
+| -------------------------------------- | -------------------------------------------------- |
+| Privacy policy                         | https://faberongroups.com/privacy                  |
+| Support URL                            | https://faberongroups.com/support                  |
+| Account deletion (Google Play)         | https://faberongroups.com/delete-account           |
+| Deletion section of the privacy policy | https://faberongroups.com/privacy#account-deletion |
+| Marketing URL                          | https://faberongroups.com                          |
 
 When an app is ready, add it to `config/apps.ts` (name, store links, package name, bundle ID and Team ID, the in-app deletion path, and whether it has subscriptions). The support, deletion and privacy pages, the footer, `/apps` and the app-link files then update by themselves.
 
@@ -160,17 +160,17 @@ When an app is ready, add it to `config/apps.ts` (name, store links, package nam
 
 ## 7. Open items
 
-| Item                      | What's needed                                                                                                                                                                                                 |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Domain                    | Buy faberongroups.com, then stages 2 and 3 above.                                                                                                                                                             |
-| Mailboxes                 | info@ (required before applying), your own work address, support@ and privacy@ aliases.                                                                                                                      |
-| Website email             | Resend account, domain verification and the variables in section 2. Until then the forms show visitors an email address instead.                                                                             |
-| RC number                 | Set `NEXT_PUBLIC_COMPANY_RC_NUMBER` in Vercel to the number on the CAC certificate, then redeploy. It then shows in the footer, About, Contact, Terms, Privacy and structured data.                            |
-| D-U-N-S Number            | Section 5. Once issued, add it to `config/company.ts` (`dunsNumber`).                                                                                                                                         |
+| Item                      | What's needed                                                                                                                                                                                                      |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Domain                    | Buy faberongroups.com, then stages 2 and 3 above.                                                                                                                                                                  |
+| Mailboxes                 | info@ (required before applying), your own work address, support@ and privacy@ aliases.                                                                                                                            |
+| Website email             | Resend account, domain verification and the variables in section 2. Until then the forms show visitors an email address instead.                                                                                   |
+| RC number                 | Set `NEXT_PUBLIC_COMPANY_RC_NUMBER` in Vercel to the number on the CAC certificate, then redeploy. It then shows in the footer, About, Contact, Terms, Privacy and structured data.                                |
+| D-U-N-S Number            | Section 5. Once issued, add it to `config/company.ts` (`dunsNumber`).                                                                                                                                              |
 | Stats wording             | The home page highlights show "3" years and "20" projects. These are the founder's own track record (from idokohubert.com). Decide whether to label them as such, for example "Projects delivered by our founder". |
-| Response time             | Not published. Add `supportResponseTime` in `config/company.ts` if you want one shown.                                                                                                                        |
-| Deletion window           | Not published. Add `deletionWindowDays` in `config/company.ts` if you want one shown.                                                                                                                         |
-| Server log retention      | The Privacy Policy mentions server logs (IP addresses) but doesn't say how long they are kept. Decide, and add it to the policy.                                                                              |
-| Spam protection provider  | If you turn on Cloudflare Turnstile, add Cloudflare to the processor list in `content/processors.ts`.                                                                                                         |
-| Legal review              | Have a lawyer review the Privacy Policy and Terms.                                                                                                                                                            |
-| Search Console (optional) | Set `GOOGLE_SITE_VERIFICATION` to the HTML-tag code from Google Search Console, then redeploy.                                                                                                                |
+| Response time             | Not published. Add `supportResponseTime` in `config/company.ts` if you want one shown.                                                                                                                             |
+| Deletion window           | Not published. Add `deletionWindowDays` in `config/company.ts` if you want one shown.                                                                                                                              |
+| Server log retention      | The Privacy Policy mentions server logs (IP addresses) but doesn't say how long they are kept. Decide, and add it to the policy.                                                                                   |
+| Spam protection provider  | If you turn on Cloudflare Turnstile, add Cloudflare to the processor list in `content/processors.ts`.                                                                                                              |
+| Legal review              | Have a lawyer review the Privacy Policy and Terms.                                                                                                                                                                 |
+| Search Console (optional) | Set `GOOGLE_SITE_VERIFICATION` to the HTML-tag code from Google Search Console, then redeploy.                                                                                                                     |

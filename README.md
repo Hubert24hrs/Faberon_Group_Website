@@ -16,30 +16,37 @@ The site runs at http://localhost:3000. In development, the contact form works w
 
 ## Scripts
 
-| Command             | What it does                   |
-| ------------------- | ------------------------------ |
-| `npm run dev`       | Starts the development server  |
-| `npm run build`     | Creates a production build     |
-| `npm run start`     | Runs the production build      |
-| `npm run lint`      | Runs ESLint                    |
-| `npm run typecheck` | Runs the TypeScript compiler   |
-| `npm run format`    | Formats the code with Prettier |
+| Command                            | What it does                                     |
+| ---------------------------------- | ------------------------------------------------ |
+| `npm run dev`                      | Starts the development server                    |
+| `npm run build`                    | Creates a production build                       |
+| `npm run start`                    | Runs the production build                        |
+| `npm run lint`                     | Runs ESLint                                      |
+| `npm run typecheck`                | Runs the TypeScript compiler                     |
+| `npm run format`                   | Formats the code with Prettier                   |
+| `npm test`                         | Runs the unit tests                              |
+| `npm run e2e -- <url>`             | Form and accessibility tests in Chrome           |
+| `npm run check:readiness -- <url>` | Developer-account readiness check of a live site |
 
 ## Environment variables
 
 All are listed in `.env.example`. Never commit real values.
 
-| Variable                       | Needed for           | Notes                                             |
-| ------------------------------ | -------------------- | ------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL`         | Metadata and sitemap | The public URL of the site                        |
-| `RESEND_API_KEY`               | Contact form         | From your Resend account                          |
-| `CONTACT_TO_EMAIL`             | Contact form         | The inbox that receives enquiries                 |
-| `CONTACT_FROM_EMAIL`           | Contact form         | Must be on a domain verified in Resend            |
-| `NEXT_PUBLIC_BOOKING_URL`      | Booking embed        | Optional. A full `cal.com` or `calendly.com` URL  |
-| `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` | Analytics            | Optional. Analytics stays off while this is empty |
-| `SITE_LAUNCHED`                | Search indexing      | Set to `true` at launch, then redeploy            |
+| Variable                        | Needed for          | Notes                                                                 |
+| ------------------------------- | ------------------- | --------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL`          | Canonical origin    | Empty on Vercel uses the production domain; required for local builds |
+| `CANONICAL_REDIRECT_ENABLED`    | Old-address forward | `true` makes `LEGACY_HOSTS` 308 to the canonical origin               |
+| `LEGACY_HOSTS`                  | Old-address forward | Comma-separated hosts                                                 |
+| `NEXT_PUBLIC_COMPANY_RC_NUMBER` | Company details     | CAC number; hidden everywhere while empty                             |
+| `RESEND_API_KEY`                | Forms               | From your Resend account                                              |
+| `EMAIL_FROM`, `EMAIL_REPLY_TO`  | Forms               | Sender and reply-to; fall back to the older `CONTACT_*` variables     |
+| `LEADS_NOTIFY_EMAIL`            | Forms               | Contact and demo inbox; falls back to `CONTACT_TO_EMAIL`              |
+| `SUPPORT_NOTIFY_EMAIL`          | Support form        | Optional; falls back to the leads inbox                               |
+| `PRIVACY_NOTIFY_EMAIL`          | Deletion form       | Optional; falls back to the leads inbox                               |
+| `NEXT_PUBLIC_BOOKING_URL`       | Booking embed       | Optional. A full `cal.com` or `calendly.com` URL                      |
+| `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`  | Analytics           | Optional. Analytics stays off while this is empty                     |
 
-In production, the contact form returns an error until the three email variables are set.
+In production, the forms show visitors an email address to use instead until Resend and a sender are configured.
 
 ## Deploy to Vercel
 
@@ -47,7 +54,7 @@ In production, the contact form returns an error until the three email variables
 2. Add the environment variables under Project Settings.
 3. Deploy, then connect the domain under Project Settings, Domains.
 
-Every page tells search engines not to index it until launch. When you're ready to appear in search, set `SITE_LAUNCHED` to `true` in Vercel and redeploy.
+Production is indexable; preview deployments are not. For moving to the company domain, follow `docs/DEVELOPER_ACCOUNT_READINESS.md`.
 
 ## Update the content
 
@@ -55,7 +62,7 @@ Content lives in typed files, so most updates are a single-file edit.
 
 | What to change                                        | Where                     |
 | ----------------------------------------------------- | ------------------------- |
-| Legal name, RC number, address, email, phone, socials | `lib/site.ts`             |
+| Legal name, RC number, address, email, phone, socials | `config/company.ts`       |
 | Services                                              | `content/services.ts`     |
 | Audiences, process, values, FAQ, tech stack           | `content/company.ts`      |
 | Hero console sample runs                              | `content/agent-runs.ts`   |
