@@ -253,66 +253,31 @@
   z-index: 70;
   overflow: hidden;
   pointer-events: none;
-  contain: strict;
 }
-/* Rings grow in size rather than scale, so their edges stay crisp as they spread.
-   --d (set per tap) is how far they reach: about 90% of the screen. */
-.liquid-ripple,
-.liquid-splash {
+.liquid-ripple {
   position: absolute;
   top: 0;
   left: 0;
+  width: 32px;
+  height: 32px;
+  margin: -16px 0 0 -16px;
   border-radius: 50%;
-  opacity: 0;
-  transform: translate(calc(var(--x) - 50%), calc(var(--y) - 50%));
-}
-.liquid-ripple {
-  width: 12px;
-  height: 12px;
-  border: 3px solid color-mix(in oklab, var(--brand-gold) 80%, white);
+  border: 1.5px solid color-mix(in oklab, var(--brand-gold) 65%, white);
   box-shadow:
-    inset 0 0 0 1.5px rgb(255 255 255 / 0.7),
-    0 0 0 1px rgb(10 32 56 / 0.28),
-    0 0 28px 4px color-mix(in oklab, var(--brand-gold) 45%, transparent);
-  animation: liquid-ring 1.6s cubic-bezier(0.15, 0.55, 0.25, 1) both;
+    inset 0 0 0 1px rgb(255 255 255 / 0.35),
+    0 0 18px 1px color-mix(in oklab, var(--brand-gold) 30%, transparent);
+  opacity: 0;
+  transform: translate(var(--x), var(--y)) scale(0.2);
+  animation: liquid-ring 1s cubic-bezier(0.2, 0.6, 0.2, 1) both;
 }
 @keyframes liquid-ring {
   0% {
-    width: 12px;
-    height: 12px;
-    opacity: 1;
-  }
-  70% {
-    opacity: 0.55;
+    opacity: 0.9;
+    transform: translate(var(--x), var(--y)) scale(0.2);
   }
   100% {
-    width: var(--d, 900px);
-    height: var(--d, 900px);
     opacity: 0;
-  }
-}
-/* The drop landing: a bright, quick splash at the tap point. */
-.liquid-splash {
-  width: 0;
-  height: 0;
-  background: radial-gradient(
-    circle,
-    rgb(255 255 255 / 0.95) 0%,
-    color-mix(in oklab, var(--brand-gold) 75%, transparent) 38%,
-    color-mix(in oklab, var(--brand-gold) 0%, transparent) 70%
-  );
-  animation: liquid-splash 0.8s cubic-bezier(0.2, 0.7, 0.3, 1) both;
-}
-@keyframes liquid-splash {
-  0% {
-    width: 0;
-    height: 0;
-    opacity: 1;
-  }
-  100% {
-    width: 220px;
-    height: 220px;
-    opacity: 0;
+    transform: translate(var(--x), var(--y)) scale(12);
   }
 }
 
@@ -369,8 +334,7 @@
     animation: none !important;
   }
 
-  .liquid-ripple,
-  .liquid-splash {
+  .liquid-ripple {
     display: none;
   }
   ::view-transition-new(root) {
