@@ -12,26 +12,21 @@ import { useEffect, useRef } from "react";
 // - With "reduce motion" switched on, nothing animates.
 // Links on the same page (#sections, Home on the homepage) are left alone.
 
-const RIPPLE_DELAYS = [0, 0.18, 0.36, 0.54]; // seconds; four rings, like water
+const RIPPLE_DELAYS = [0, 0.12, 0.24];
 const SETTLE_TIMEOUT = 2500; // never hold the old page longer than this
 
 type Origin = { x: number; y: number };
 
 function spawnRipples(layer: HTMLElement, { x, y }: Origin) {
-  // The rings reach about 90% of the screen's longer side, so they read on any device.
-  const reach = Math.round(Math.max(window.innerWidth, window.innerHeight) * 0.9);
-  const add = (className: string, delay: number) => {
-    const el = document.createElement("span");
-    el.className = className;
-    el.style.setProperty("--x", `${x}px`);
-    el.style.setProperty("--y", `${y}px`);
-    el.style.setProperty("--d", `${reach}px`);
-    el.style.animationDelay = `${delay}s`;
-    el.addEventListener("animationend", () => el.remove(), { once: true });
-    layer.appendChild(el);
-  };
-  add("liquid-splash", 0);
-  for (const delay of RIPPLE_DELAYS) add("liquid-ripple", delay);
+  for (const delay of RIPPLE_DELAYS) {
+    const ring = document.createElement("span");
+    ring.className = "liquid-ripple";
+    ring.style.setProperty("--x", `${x}px`);
+    ring.style.setProperty("--y", `${y}px`);
+    ring.style.animationDelay = `${delay}s`;
+    ring.addEventListener("animationend", () => ring.remove(), { once: true });
+    layer.appendChild(ring);
+  }
 }
 
 export function PageTransitions() {
