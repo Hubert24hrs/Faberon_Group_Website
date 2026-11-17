@@ -1,3 +1,4 @@
+import { apps } from "@/config/apps";
 import { z } from "zod";
 
 export const serviceGroups = [
@@ -119,3 +120,70 @@ export const newsletterSchema = z.object({
   email: z.email("Enter a valid email address").max(254),
   website: z.string().max(200).optional(),
 });
+
+// ---------------------------------------------------------------------------
+// Support and account-deletion requests. App choices come from config/apps.ts.
+
+export const otherAppOption = "Website or other";
+
+export const appOptions: readonly string[] = [...apps.map((app) => app.name), otherAppOption];
+
+const appChoice = z.string().refine((value) => appOptions.includes(value), {
+  error: "Choose what your request is about",
+});
+
+const optionalLine = (label: string, max: number) =>
+  z
+    .string()
+    .trim()
+    .max(max, `Keep the ${label} under ${max} characters`)
+    .regex(/^[^\r\n]*$/, `Enter the ${label} on one line`)
+    .optional()
+    .or(z.literal(""));
+
+const requestMeta = {
+  // Spam trap. Hidden from people, so anything here came from a bot.
+  website: z.string().max(200).optional(),
+  turnstileToken: z.string().max(2048).optional(),
+};
+
+export const supportSchema = z.object({
+  name: singleLine("name", 120),
+  email: z.email("Enter a valid email address").max(254),
+  app: appChoice,
+  device: optionalLine("device and OS version", 160),
+  message: z
+    .string()
+    .trim()
+    .min(messageMinLength, `Describe the problem in at least ${messageMinLength} characters`)
+    .max(messageMaxLength, "Keep your message under 4,000 characters"),
+  ...requestMeta,
+});
+
+export type SupportInput = z.infer<typeof supportSchema>;
+
+export const deletionRequestTypes = {
+  account: "Delete my account and all its data",
+  data: "Delete specific data and keep my account",
+} as const;
+
+export const deletionSchema = z.object({
+  app: appChoice,
+  email: z.email("Enter the email address you use in the app").max(254),
+  username: optionalLine("username", 120),
+  requestType: z.enum(Object.keys(deletionRequestTypes) as ["account", "data"], {
+    error: "Choose what you'd like deleted",
+  }),
+  details: z
+    .string()
+    .trim()
+    .max(2000, "Keep the details under 2,000 characters")
+    .optional()
+    .or(z.literal("")),
+  confirmOwner: z.literal(true, {
+    error: "Confirm that the account is yours",
+  }),
+  ...requestMeta,
+});
+
+export type DeletionInput = z.infer<typeof deletionSchema>;
