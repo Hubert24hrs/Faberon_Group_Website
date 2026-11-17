@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { apps } from "@/config/apps";
 import { services } from "@/content/services";
 import { features, formatAddress, site, telHref } from "@/lib/site";
 import { NewsletterForm } from "@/components/forms/newsletter-form";
@@ -16,8 +17,11 @@ const company = [
 ];
 
 const legal = [
+  { label: "Support", href: "/support" },
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Terms of Service", href: "/terms" },
+  // Shown once an app is published; Privacy and Support always link to it.
+  ...(apps.length > 0 ? [{ label: "Account and data deletion", href: "/delete-account" }] : []),
 ];
 
 function FooterColumn({
@@ -88,7 +92,7 @@ export function Footer() {
           <FooterColumn title="Company" links={company} />
         </div>
         <div className="md:col-span-2">
-          <FooterColumn title="Legal" links={legal} />
+          <FooterColumn title="Help and legal" links={legal} />
           {site.socials.length > 0 ? (
             <div className="mt-8">
               <h2 className="eyebrow font-sans font-normal text-subtle">Follow us</h2>
