@@ -212,15 +212,6 @@ async function main() {
     noindex.length === 0,
     noindex.map((page) => new URL(page.url).pathname).join(", "),
   );
-  const testimonials = await get(`${origin}/testimonials`);
-  const testimonialsNoindex =
-    testimonials.status !== 200 || /noindex/i.test(metaRobotsOf(testimonials.html) ?? "");
-  if (testimonialsNoindex) {
-    record(
-      "Testimonials (no quotes yet) is not in the sitemap",
-      !sitemapUrls.some((url) => new URL(url).pathname === "/testimonials"),
-    );
-  }
 
   // 6. robots.txt.
   const robots = await get(`${origin}/robots.txt`);

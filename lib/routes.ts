@@ -2,7 +2,6 @@ import { apps } from "@/config/apps";
 import { caseStudies } from "@/content/case-studies";
 import { insights } from "@/content/insights";
 import { services } from "@/content/services";
-import { hasTestimonials } from "@/content/testimonials";
 import { features } from "@/lib/site";
 
 /**
@@ -26,7 +25,7 @@ export const requiredPaths = [
 
 /**
  * Every indexable page, in one typed list. The sitemap is built from it. Pages that are
- * noindex (Testimonials while it has no quotes, /apps while no app is published) are left out.
+ * noindex (such as /apps while no app is published) are left out.
  */
 export function indexableRoutes(): string[] {
   return [
@@ -35,7 +34,6 @@ export function indexableRoutes(): string[] {
     ...services.map((service) => `/services/${service.slug}`),
     "/solutions",
     "/about",
-    ...(hasTestimonials ? ["/testimonials"] : []),
     "/contact",
     "/demo",
     "/support",

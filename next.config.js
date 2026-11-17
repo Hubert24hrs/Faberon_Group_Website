@@ -56,6 +56,8 @@ const nextConfig = {
   async redirects() {
     return [
       { source: "/data-deletion", destination: "/delete-account", permanent: true },
+      // Testimonials was removed; old links go to the home page.
+      { source: "/testimonials", destination: "/", permanent: true },
       // Legacy hosts to the canonical origin, only when CANONICAL_REDIRECT_ENABLED is "true".
       ...buildCanonicalRedirects({
         enabled: process.env.CANONICAL_REDIRECT_ENABLED,

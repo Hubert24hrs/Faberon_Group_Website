@@ -7,7 +7,6 @@ import { Hero } from "@/components/sections/hero";
 import { PrinciplesSection } from "@/components/sections/principles-section";
 import { ProcessSection } from "@/components/sections/process-section";
 import { SelectedWork } from "@/components/sections/selected-work";
-import { TestimonialsSection } from "@/components/sections/testimonials-section";
 import { ServicesBento } from "@/components/sections/services-bento";
 import type { Metadata } from "next";
 import { features } from "@/lib/site";
@@ -27,7 +26,6 @@ export default function HomePage() {
       <ProcessSection />
       {features.work ? <SelectedWork /> : null}
       <PrinciplesSection />
-      <TestimonialsSection id="testimonials" />
       <FaqSection />
       <FinalCta />
     </>
