@@ -2,6 +2,8 @@
 
 Corporate website for Faberon Group Technologies Limited, built with Next.js (App Router), TypeScript, Tailwind CSS and Framer Motion.
 
+**Picking this up again?** Start with [docs/NEXT_STEPS.md](docs/NEXT_STEPS.md).
+
 ## Run it locally
 
 Requires Node.js 22 or later.
