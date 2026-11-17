@@ -13,6 +13,11 @@ export type PublishedApp = {
     /** Apple Developer Team ID, e.g. "ABCDE12345". */
     teamId?: string;
     storeUrl?: string;
+    /**
+     * Website paths that should open in the app (universal links), e.g. ["/apps/notes/*"].
+     * Leave empty for none. Never use "/*": every link to the website would open the app.
+     */
+    linkPaths?: string[];
   };
   android?: {
     packageName?: string;
