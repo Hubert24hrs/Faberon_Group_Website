@@ -16,7 +16,7 @@ This plan maps the enterprise upgrade brief (groups A to H) onto this codebase. 
 | `/services/ai-agents` | 90          | 100           | 100            | 66  |
 | `/contact`            | 84          | 100           | 96             | 66  |
 
-SEO is low by design: every page sends `noindex` until `SITE_LAUNCHED=true`. The home page's 2 s blocking time was measured while a build ran on the same machine, so it needs re-measuring.
+SEO was low by design while every page sent `noindex` (since 17 November 2026 production is indexable). The home page's 2 s blocking time was measured while a build ran on the same machine, so it needs re-measuring.
 
 ## Audit corrections
 
