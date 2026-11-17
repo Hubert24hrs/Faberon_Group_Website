@@ -3,8 +3,15 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CircleCheck } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { useForm, useWatch, type FieldError } from "react-hook-form";
+import { useEffect, useRef, useState } from "react";
+import { useForm, useWatch } from "react-hook-form";
+import {
+  Field,
+  inputClass,
+  RequiredMark,
+  SpamTrap,
+  spamTrapInputProps,
+} from "@/components/forms/form-field";
 import { Turnstile } from "@/components/forms/turnstile";
 import { Button } from "@/components/ui/button";
 import { readAttribution, track } from "@/lib/analytics";
@@ -56,9 +63,6 @@ const statusMessages: Partial<Record<Status, string>> = {
   verification: "We couldn't verify the request. Please complete the check and try again.",
 };
 
-const inputClass =
-  "mt-1.5 block w-full rounded-md border border-line-strong bg-surface px-3 py-2.5 text-base text-ink transition-colors sm:text-[0.9375rem] placeholder:text-subtle aria-[invalid=true]:border-danger";
-
 function readSaved(key: string): Partial<ContactInput> | undefined {
   try {
     const raw = sessionStorage.getItem(key);
@@ -85,39 +89,6 @@ function readPrefill(): Partial<ContactInput> {
   return prefill;
 }
 
-function Field({
-  id,
-  label,
-  hint,
-  error,
-  children,
-}: {
-  id: string;
-  label: string;
-  hint?: ReactNode;
-  error?: FieldError;
-  children: ReactNode;
-}) {
-  return (
-    <div>
-      <label htmlFor={id} className="text-sm font-medium">
-        {label}
-      </label>
-      {hint ? (
-        <p id={`${id}-hint`} className="mt-1 text-sm text-muted">
-          {hint}
-        </p>
-      ) : null}
-      {children}
-      {error ? (
-        <p id={`${id}-error`} className="mt-1.5 text-sm text-danger">
-          {error.message}
-        </p>
-      ) : null}
-    </div>
-  );
-}
-
 export function ConsultationForm({
   intent = "consultation",
   nextSteps,
@@ -142,6 +113,7 @@ export function ConsultationForm({
     trigger,
     subscribe,
     setFocus,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<ContactInput>({
     resolver: zodResolver(contactSchema),
@@ -233,7 +205,25 @@ export function ConsultationForm({
         setStatus("success");
         return;
       }
-      const { error } = (await response.json().catch(() => ({}))) as { error?: string };
+      const { error, fieldErrors } = (await response.json().catch(() => ({}))) as {
+        error?: string;
+        fieldErrors?: Partial<Record<FieldName, string[]>>;
+      };
+      // The server checks every field too; tie its messages to the fields they belong to.
+      const serverFields = Object.entries(fieldErrors ?? {}).filter(
+        (entry): entry is [FieldName, string[]] => entry[0] in fieldLabels && !!entry[1]?.length,
+      );
+      if (serverFields.length > 0) {
+        for (const [field, messages] of serverFields) {
+          setError(field, { type: "server", message: messages[0] });
+        }
+        const first = steps.findIndex((item) =>
+          item.fields.some((field) => serverFields.some(([name]) => name === field)),
+        );
+        if (first >= 0) setStep(first);
+        showErrors();
+        return;
+      }
       setStatus(
         response.status === 429
           ? "rate_limited"
@@ -258,6 +248,7 @@ export function ConsultationForm({
   function aria(name: FieldName, describedBy: string[] = []) {
     const ids = [...describedBy, ...(errors[name] ? [`${name}-error`] : [])];
     return {
+      "aria-required": true,
       "aria-invalid": errors[name] ? true : undefined,
       "aria-describedby": ids.length > 0 ? ids.join(" ") : undefined,
     };
@@ -349,7 +340,7 @@ export function ConsultationForm({
 
       <div className="mt-6 space-y-5">
         {step === 0 ? (
-          <Field id="service" label="Service of interest" error={errors.service}>
+          <Field id="service" label="Service of interest" error={errors.service?.message} required>
             <select
               id="service"
               className={inputClass}
@@ -372,8 +363,17 @@ export function ConsultationForm({
 
         {step === 1 ? (
           <fieldset aria-describedby={errors.budget ? "budget-error" : undefined}>
-            <legend className="text-sm font-medium">Budget (USD)</legend>
-            <div className="mt-2 grid gap-2 sm:grid-cols-2">
+            <legend className="text-sm font-medium">
+              Budget (USD)
+              <RequiredMark />
+            </legend>
+            <div
+              role="radiogroup"
+              aria-required="true"
+              aria-label="Budget (USD)"
+              aria-invalid={errors.budget ? true : undefined}
+              className="mt-2 grid gap-2 sm:grid-cols-2"
+            >
               {budgetOptions.map((option) => (
                 <label
                   key={option}
@@ -399,7 +399,12 @@ export function ConsultationForm({
 
         {step === 2 ? (
           <>
-            <Field id="company" label="Company or organisation" error={errors.company}>
+            <Field
+              id="company"
+              label="Company or organisation"
+              error={errors.company?.message}
+              required
+            >
               <input
                 id="company"
                 type="text"
@@ -413,7 +418,8 @@ export function ConsultationForm({
               id="message"
               label="What do you need built?"
               hint="A few sentences on the problem, who it's for, and any deadline."
-              error={errors.message}
+              error={errors.message?.message}
+              required
             >
               <textarea
                 id="message"
@@ -433,7 +439,7 @@ export function ConsultationForm({
         {step === 3 ? (
           <>
             <div className="grid gap-5 sm:grid-cols-2">
-              <Field id="name" label="Name" error={errors.name}>
+              <Field id="name" label="Name" error={errors.name?.message} required>
                 <input
                   id="name"
                   type="text"
@@ -443,7 +449,7 @@ export function ConsultationForm({
                   {...register("name")}
                 />
               </Field>
-              <Field id="email" label="Work email" error={errors.email}>
+              <Field id="email" label="Work email" error={errors.email?.message} required>
                 <input
                   id="email"
                   type="email"
@@ -466,11 +472,10 @@ export function ConsultationForm({
         ) : null}
       </div>
 
-      {/* Honeypot, kept off-screen rather than display:none so bots still fill it. */}
-      <div aria-hidden className="absolute -left-[9999px] size-px overflow-hidden">
-        <label htmlFor="website">Website</label>
-        <input id="website" type="text" tabIndex={-1} autoComplete="off" {...register("website")} />
-      </div>
+      {/* Spam trap: off-screen rather than display:none so bots still fill it. */}
+      <SpamTrap>
+        <input {...spamTrapInputProps} {...register("website")} />
+      </SpamTrap>
 
       {failure ? (
         <p role="alert" className="mt-5 text-sm text-danger">

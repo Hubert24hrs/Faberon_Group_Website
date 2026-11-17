@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageHeader } from "@/components/ui/page-header";
+import { apps } from "@/config/apps";
+import { rcLabel } from "@/config/company";
+import { processorSentence } from "@/content/processors";
 import { formatAddress, site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -16,14 +20,14 @@ export default function PrivacyPage() {
       {email}
     </a>
   ) : (
-    <a href="/contact" className="text-accent-text underline">
+    <Link href="/contact" className="text-accent-text underline">
       our contact page
-    </a>
+    </Link>
   );
 
   return (
     <>
-      <PageHeader eyebrow="Legal" title="Privacy Policy" lead="Last updated 16 November 2026." />
+      <PageHeader eyebrow="Legal" title="Privacy Policy" lead="Last updated 17 November 2026." />
       <div className="site-container py-16">
         <article className="prose-legal max-w-prose">
           <h2>Who we are</h2>
@@ -90,11 +94,10 @@ export default function PrivacyPage() {
 
           <h2>Who we share it with</h2>
           <p>
-            We use service providers that process data for us and only on our instructions: Vercel
-            for website hosting, Resend for delivering form emails, Cal.com for booking where
-            it&apos;s enabled, and Apple and Google for app distribution. Any other provider an app
-            uses, such as for crash reporting, is named in that app&apos;s store listing. We may
-            also disclose data where the law requires it.
+            We use service providers that process data for us and only on our instructions:{" "}
+            {processorSentence()}. Any other provider an app uses, such as for crash reporting, is
+            named in that app&apos;s store listing. We may also disclose data where the law requires
+            it.
           </p>
 
           <h2>International transfers</h2>
@@ -110,12 +113,28 @@ export default function PrivacyPage() {
             Project records are kept for as long as our contracts and the law require.
           </p>
 
-          {/* Linked from app store listings as the account deletion page: /privacy#delete-account */}
-          <h2 id="delete-account">Deleting your account and data</h2>
+          {/* Linked from app store listings: /privacy#account-deletion (the older
+              /privacy#delete-account anchor still works). */}
+          <span id="delete-account" aria-hidden="true" />
+          <h2 id="account-deletion">Deleting your account and data</h2>
           <p>
             Where an app has accounts, you can delete your account from within the app. You can also
             ask us to delete your account and data by emailing {contactLink}. We&apos;ll confirm
             once it&apos;s done.
+          </p>
+          <p>
+            You can also use the request form on our{" "}
+            <Link href="/delete-account" className="text-accent-text underline">
+              account and data deletion page
+            </Link>
+            , which works without the app installed. Before deleting anything, we confirm the
+            account is yours by replying to its email address.
+          </p>
+          <p>
+            When your account is deleted, we delete your app account data, which we keep only for as
+            long as your account is open. Enquiries are kept for up to 24 months after our last
+            contact unless they lead to a project, and project records are kept for as long as our
+            contracts and the law require.
           </p>
 
           <h2>Children</h2>
@@ -149,11 +168,35 @@ export default function PrivacyPage() {
           <h2>Changes</h2>
           <p>We&apos;ll update this page when this policy changes, and change the date above.</p>
 
-          <h2>Contact</h2>
+          {apps.length > 0 ? (
+            <>
+              <h2 id="app-specific-information">App-specific information</h2>
+              {apps.map((app) => (
+                <section key={app.slug} id={app.slug} aria-labelledby={`${app.slug}-title`}>
+                  <h3 id={`${app.slug}-title`}>{app.name}</h3>
+                  <p>{app.dataNotes ?? app.shortDescription}</p>
+                </section>
+              ))}
+            </>
+          ) : null}
+
+          <h2 id="contact">Contact</h2>
           <p>
-            {site.legalName}, {formatAddress(site.contact.address)}. To ask about your data or use
-            your rights, contact {contactLink}
+            {site.legalName}
+            {rcLabel() ? ` (${rcLabel()})` : ""}, {formatAddress(site.contact.address)}. To ask
+            about your data or use your rights, contact {contactLink}
             {site.contact.phone ? ` or call ${site.contact.phone}` : ""}.
+          </p>
+          <p>
+            You can also reach us through our{" "}
+            <Link href="/contact" className="text-accent-text underline">
+              contact form
+            </Link>{" "}
+            or our{" "}
+            <Link href="/support" className="text-accent-text underline">
+              support page
+            </Link>
+            .
           </p>
         </article>
       </div>

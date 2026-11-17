@@ -1,4 +1,5 @@
 import type { ServiceSlug } from "./services";
+import { company } from "@/config/company";
 
 export const capabilities = [
   "Web applications",
@@ -153,7 +154,7 @@ export const agentFlow = [
 
 export const faqs = [
   {
-    question: "What does Faberon Group build?",
+    question: `What does ${company.shortName} build?`,
     answer:
       "Custom SaaS, AI agents, AI automation, mobile apps and websites, plus machine learning, data, full-stack and cloud engineering. We work with corporations, organisations, brands and individuals.",
   },

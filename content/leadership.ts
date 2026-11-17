@@ -1,3 +1,4 @@
+import { company } from "@/config/company";
 export type Leader = {
   name: string;
   role: string;
@@ -12,24 +13,25 @@ export type Leader = {
 // Sourced from idokohubert.com.
 export const leaders: Leader[] = [
   {
-    name: "Idoko Hubert",
-    role: "Founder",
+    // Name and title come from the company config (the Account Holder).
+    name: company.leadership[0]?.name ?? "",
+    role: company.leadership[0]?.title ?? "",
     headline: "AI & ML Engineer · Full-Stack Developer · Data Solutions Architect",
     photo: {
       src: "/leadership/idoko-hubert.jpg",
-      alt: "Idoko Hubert at Lagos Tech Week",
+      alt: `${company.leadership[0]?.name ?? "Our founder"} at Lagos Tech Week`,
       width: 765,
       height: 1024,
     },
     bio: [
-      "Idoko Hubert leads Faberon Group Technologies Limited. Hubert is an AI and machine learning engineer, full-stack developer and data solutions architect who builds intelligent, scalable systems that connect machine learning, analytics and software.",
+      `${company.leadership[0]?.name ?? ""} leads ${company.legalName}. Hubert is an AI and machine learning engineer, full-stack developer and data solutions architect who builds intelligent, scalable systems that connect machine learning, analytics and software.`,
       "Hubert's work spans solution architecture, data pipeline engineering, cloud-native infrastructure and AI model deployment, turning complex data into production-ready applications that deliver real business value.",
-      "That mix of technical rigour and product thinking sets the standard for every project Faberon Group takes on.",
+      `That mix of technical rigour and product thinking sets the standard for every project ${company.shortName} takes on.`,
     ],
-    highlights: [
-      { value: "3+", label: "Years building production systems" },
-      { value: "20+", label: "Projects delivered" },
-    ],
+    // The founder's own track record, from the company config.
+    highlights: company.stats
+      .filter((stat) => stat.attribution === "founder")
+      .map(({ value, label }) => ({ value, label })),
     expertise: [
       "Machine learning and deep learning",
       "Natural language processing",

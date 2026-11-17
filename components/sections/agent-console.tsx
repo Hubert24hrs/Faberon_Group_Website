@@ -43,7 +43,7 @@ export function AgentConsole() {
           : "Running";
 
   return (
-    <div className="overflow-hidden rounded-lg border border-line-strong bg-surface">
+    <div data-sample="true" className="overflow-hidden rounded-lg border border-line-strong bg-surface">
       <div className="flex items-center justify-between gap-3 border-b border-line px-4 py-3">
         <p className="font-mono text-xs text-subtle">agent run · sample</p>
         <p role="status" className="font-mono text-xs text-accent-text">

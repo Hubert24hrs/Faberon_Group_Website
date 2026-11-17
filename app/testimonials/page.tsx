@@ -12,6 +12,8 @@ export const metadata: Metadata = {
   title: "Testimonials",
   description: `What clients say about working with ${site.legalName}.`,
   alternates: { canonical: "/testimonials" },
+  // Kept out of search (and the sitemap and navigation) until a real testimonial exists.
+  ...(hasTestimonials ? {} : { robots: { index: false, follow: true } }),
 };
 
 export default function TestimonialsPage() {

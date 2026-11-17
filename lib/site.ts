@@ -1,4 +1,5 @@
-import { siteUrl } from "@/lib/env";
+import { company } from "@/config/company";
+import { SITE_URL } from "@/lib/env";
 
 export type SocialLink = { label: string; href: string };
 
@@ -28,31 +29,29 @@ type SiteConfig = {
   socials: SocialLink[];
 };
 
+// Built from config/company.ts, which is the one place the company's details live.
 export const site: SiteConfig = {
-  name: "Faberon Group",
-  // Must match the CAC Certificate of Incorporation and D-U-N-S record letter for letter.
-  legalName: "Faberon Group Technologies Limited",
-  // TODO: add the RC number from the Certificate of Incorporation. It shows in the footer once set.
-  registrationNumber: null,
+  name: company.shortName,
+  legalName: company.legalName,
+  registrationNumber: company.rcNumber,
   tagline: "Our team's best work. Software and AI you own.",
-  description:
-    "Faberon Group Technologies Limited designs and builds custom SaaS, AI agents, automation, mobile apps and websites, plus machine learning, data and cloud engineering, then hands over the code and documentation.",
-  url: siteUrl,
-  base: "Lagos, Nigeria",
+  description: `${company.legalName} designs and builds custom SaaS, AI agents, automation, mobile apps and websites, plus machine learning, data and cloud engineering, then hands over the code and documentation.`,
+  url: SITE_URL,
+  base: `${company.registeredAddress.region}, ${company.registeredAddress.country}`,
   contact: {
-    email: "info@faberongroups.com",
-    phone: "+234 703 028 8378",
+    email: company.emails.general,
+    phone: company.phone.display,
     whatsapp: null,
     address: {
-      street: "House 5, Gate 3, Zion Court Estate, Prince Samuel Adedoyin Street, Ikate",
-      locality: "Lekki",
-      region: "Lagos",
-      country: "Nigeria",
-      countryCode: "NG",
+      street: company.registeredAddress.street,
+      locality: company.registeredAddress.locality,
+      region: company.registeredAddress.region,
+      country: company.registeredAddress.country,
+      countryCode: company.registeredAddress.countryCode,
     },
     hours: null,
   },
-  socials: [{ label: "TikTok", href: "https://www.tiktok.com/@faberon_group" }],
+  socials: company.socials,
 };
 
 export function formatAddress({ street, locality, region, country }: PostalAddress) {

@@ -1,6 +1,6 @@
-import { sendEmail } from "@/lib/email";
+import { brandedText, mailRouting, sendEmail } from "@/lib/email";
 import { serverEnv } from "@/lib/env.server";
-import { formatAddress, site } from "@/lib/site";
+import { site } from "@/lib/site";
 import type { LeadInput } from "@/lib/validators";
 import { activeCrmAdapters } from "./crm";
 import type { LeadTier } from "./score";
@@ -53,7 +53,7 @@ function internalSummary(lead: LeadRecord) {
 
 function visitorConfirmation(lead: LeadRecord) {
   const steps = nextSteps[lead.intent ?? "consultation"];
-  return [
+  return brandedText([
     `Hello ${lead.name},`,
     "",
     `Thank you for contacting ${site.legalName}. We've received your ${lead.requestType.toLowerCase()} about ${lead.service}.`,
@@ -62,12 +62,7 @@ function visitorConfirmation(lead: LeadRecord) {
     ...steps.map((step, index) => `${index + 1}. ${step}`),
     "",
     "You can reply to this email if you'd like to add anything.",
-    "",
-    site.legalName,
-    formatAddress(site.contact.address),
-    [site.contact.email, site.contact.phone].filter(Boolean).join(" · "),
-    site.url,
-  ].join("\n");
+  ]);
 }
 
 async function postToSlack(lead: LeadRecord) {
@@ -108,7 +103,7 @@ export async function deliverLead(lead: LeadRecord) {
       to: lead.email,
       subject: `We've received your request | ${site.name}`,
       text: visitorConfirmation(lead),
-      replyTo: serverEnv().CONTACT_TO_EMAIL,
+      replyTo: mailRouting().replyTo,
     });
   }
 

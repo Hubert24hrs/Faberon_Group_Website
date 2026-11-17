@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageHeader } from "@/components/ui/page-header";
+import { company, rcLabel } from "@/config/company";
 import { formatAddress, site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -15,14 +17,14 @@ export default function TermsPage() {
 
   return (
     <>
-      <PageHeader eyebrow="Legal" title="Terms of Service" lead="Last updated 16 November 2026." />
+      <PageHeader eyebrow="Legal" title="Terms of Service" lead="Last updated 17 November 2026." />
       <div className="site-container py-16">
         <article className="prose-legal max-w-prose">
           <h2>About these terms</h2>
           <p>
             These terms cover your use of this website and of mobile apps published by {owner}, a
-            company registered in Nigeria with its office at {formatAddress(site.contact.address)}.
-            By using them, you accept these terms.
+            company registered in Nigeria{rcLabel() ? ` (${rcLabel()})` : ""} with its office at{" "}
+            {formatAddress(site.contact.address)}. By using them, you accept these terms.
           </p>
 
           <h2>Project work</h2>
@@ -40,7 +42,8 @@ export default function TermsPage() {
             <a href="/privacy" className="text-accent-text underline">
               Privacy Policy
             </a>{" "}
-            explains how our apps handle your data.
+            explains how our apps handle your data. Our apps are published on the App Store and
+            Google Play under the developer name {company.storeDeveloperName}.
           </p>
 
           <h2>Acceptable use</h2>
@@ -95,6 +98,13 @@ export default function TermsPage() {
               </>
             ) : null}
             {site.contact.phone ? `, phone ${site.contact.phone}` : ""}.
+          </p>
+          <p>
+            For help with our apps or this website, visit{" "}
+            <Link href="/support" className="text-accent-text underline">
+              Support
+            </Link>
+            .
           </p>
         </article>
       </div>

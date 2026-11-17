@@ -17,3 +17,6 @@ export type Testimonial = {
 // has an entry, with the 3D corridor on /testimonials. While it's empty, the section
 // invites past clients to share their experience instead.
 export const testimonials: Testimonial[] = [];
+
+/** True once at least one real testimonial exists. Drives the links, sitemap and indexing. */
+export const hasTestimonials = testimonials.length > 0;

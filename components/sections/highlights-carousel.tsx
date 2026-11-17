@@ -3,6 +3,7 @@
 import { useSyncExternalStore } from "react";
 import { WarpCarousel } from "@/components/ui/warp-carousel";
 import { highlightCards } from "@/content/highlights";
+import { company } from "@/config/company";
 
 // The carousel paints on a canvas, so it needs real colour and font values
 // rather than CSS variables. These follow the theme toggle and system theme.
@@ -37,7 +38,7 @@ export function HighlightsCarousel() {
       cards={highlightCards}
       background={background}
       font={font}
-      ariaLabel="Faberon Group highlights. Use the arrow keys to turn."
+      ariaLabel={`${company.shortName} highlights. Use the arrow keys to turn.`}
     />
   );
 }

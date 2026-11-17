@@ -3,10 +3,10 @@ import { Reveal } from "@/components/motion/reveal";
 import { ButtonLink } from "@/components/ui/button";
 import { Endless, type CorridorCard } from "@/components/ui/endless";
 import { SectionHeader } from "@/components/ui/section-header";
-import { testimonials } from "@/content/testimonials";
+import { hasTestimonials, testimonials } from "@/content/testimonials";
 import { primaryCta, site } from "@/lib/site";
 
-export const hasTestimonials = testimonials.length > 0;
+export { hasTestimonials };
 
 const shareHref = site.contact.email
   ? `mailto:${site.contact.email}?subject=${encodeURIComponent(`Testimonial for ${site.name}`)}`

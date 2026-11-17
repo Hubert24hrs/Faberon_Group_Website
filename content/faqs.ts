@@ -1,4 +1,5 @@
 import type { ServiceSlug } from "./services";
+import { company } from "@/config/company";
 
 export type Faq = {
   question: string;
@@ -43,14 +44,13 @@ export const contactFaqs: Faq[] = [
 
 export const aboutFaqs: Faq[] = [
   {
-    question: "Where is Faberon Group based?",
+    question: `Where is ${company.shortName} based?`,
     answer:
       "Our office is in Ikate, Lekki, Lagos, Nigeria. We work with clients globally, online and across time zones.",
   },
   {
     question: "Who leads the company?",
-    answer:
-      "Faberon Group is led by its founder, Idoko Hubert, an AI and machine learning engineer, full-stack developer and data solutions architect.",
+    answer: `${company.shortName} is led by its ${company.leadership[0]?.title.toLowerCase() ?? "founder"}, ${company.leadership[0]?.name ?? ""}, an AI and machine learning engineer, full-stack developer and data solutions architect.`,
     link: { label: "Meet our leadership", href: "/about#leadership" },
   },
   {

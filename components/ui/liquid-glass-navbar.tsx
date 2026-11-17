@@ -93,7 +93,11 @@ const NIMBUS_CSS = `
 /* Fit: type and spacing scale with the screen. Six labels fit from 320px phones up to tablets. */
 .nimbus-nav[data-fit="true"]{padding:4px;gap:0}
 .nimbus-nav[data-fit="true"] .nv-ico{display:none}
-.nimbus-nav[data-fit="true"] .nimbus-item{gap:0;padding:0 clamp(3px,1.2vw,12px);font-size:clamp(9px,3.2vw,14px)}
+/* Up to five items: the original 14px labels and 12px spacing wherever they fit (about 480px
+   and wider), easing down only as far as each screen needs, to 280px phones. */
+.nimbus-nav[data-fit="true"] .nimbus-item{gap:0;padding:0 clamp(4px,calc(2.5vw - 1.5px),12px);font-size:clamp(10.5px,3.9vw,14px)}
+/* Six or more items need a little more room. */
+.nimbus-nav[data-fit="true"][data-many="true"] .nimbus-item{padding:0 clamp(3px,1.2vw,12px);font-size:clamp(9px,3.2vw,14px)}
 /* Without backdrop-filter, a near-solid tint keeps labels readable over any background. */
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.nimbus-glass{background:var(--n-solid)}}
 @media (prefers-reduced-motion:reduce){.nv-ico svg{animation:none!important;transition:none}}
@@ -599,6 +603,7 @@ export function LiquidNavbar({
       data-compact={compact === undefined ? undefined : String(compact)}
       data-dense={dense || undefined}
       data-fit={fit || undefined}
+      data-many={items.length > 5 || undefined}
       data-refract={refract ? "on" : "off"}
       aria-label={ariaLabel}
       onKeyDown={onKeyDown}
