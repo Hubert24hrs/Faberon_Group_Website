@@ -3,12 +3,13 @@ import { services } from "@/content/services";
 import { features, formatAddress, site, telHref } from "@/lib/site";
 import { NewsletterForm } from "@/components/forms/newsletter-form";
 import { Logo } from "./logo";
+import { hasTestimonials } from "@/content/testimonials";
 
 const company = [
   { label: "About Us", href: "/about" },
   { label: "Leadership", href: "/about#leadership" },
   { label: "Solutions", href: "/solutions" },
-  { label: "Testimonials", href: "/testimonials" },
+  ...(hasTestimonials ? [{ label: "Testimonials", href: "/testimonials" }] : []),
   ...(features.work ? [{ label: "Work", href: "/work" }] : []),
   ...(features.insights ? [{ label: "Insights", href: "/insights" }] : []),
   { label: "Contact", href: "/contact" },

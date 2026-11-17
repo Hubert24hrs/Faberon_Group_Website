@@ -11,6 +11,7 @@ import type { NimbusFx } from "@/components/ui/liquid-glass-navbar";
 import { services } from "@/content/services";
 import { audiences } from "@/content/company";
 import { demoCta, primaryCta, site, telHref } from "@/lib/site";
+import { hasTestimonials } from "@/content/testimonials";
 
 export type NavLink = { label: string; href: string; external?: boolean };
 
@@ -38,7 +39,7 @@ export const siteNav: NavSection[] = [
       { label: "Who we build for", href: "/#who-we-build-for" },
       { label: "How we work", href: "/#process" },
       { label: "Engineering principles", href: "/#principles" },
-      { label: "What clients say", href: "/#testimonials" },
+      ...(hasTestimonials ? [{ label: "What clients say", href: "/#testimonials" }] : []),
       { label: "Questions and answers", href: "/#faq" },
     ],
   },
@@ -74,16 +75,21 @@ export const siteNav: NavSection[] = [
       { label: "Company information", href: "/about#company-information" },
     ],
   },
-  {
-    label: "Testimonials",
-    href: "/testimonials",
-    icon: MessageSquareQuote,
-    fx: "drop",
-    links: [
-      { label: "What clients say", href: "/testimonials" },
-      { label: "Share your experience", href: "/testimonials#client-testimonials" },
-    ],
-  },
+  // Shown only once a real testimonial is published; it returns by itself when one is added.
+  ...(hasTestimonials
+    ? [
+        {
+          label: "Testimonials",
+          href: "/testimonials",
+          icon: MessageSquareQuote,
+          fx: "drop" as const,
+          links: [
+            { label: "What clients say", href: "/testimonials" },
+            { label: "Share your experience", href: "/testimonials#client-testimonials" },
+          ],
+        },
+      ]
+    : []),
   {
     label: "Contact",
     href: "/contact",
