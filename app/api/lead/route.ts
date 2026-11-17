@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { z } from "zod";
 import { isDisposableEmail } from "@/lib/leads/email-checks";
 import { deliverLead } from "@/lib/leads/notify";
 import { scoreLead } from "@/lib/leads/score";
@@ -18,13 +19,17 @@ export async function POST(request: Request) {
   const body: unknown = await request.json().catch(() => null);
   const parsed = leadSchema.safeParse(body);
   if (!parsed.success) {
-    return NextResponse.json({ error: "invalid" }, { status: 400 });
+    // Field-level messages, so the form can show each one next to its field.
+    return NextResponse.json(
+      { error: "invalid", fieldErrors: z.flattenError(parsed.error).fieldErrors },
+      { status: 400 },
+    );
   }
 
   const { website, turnstileToken, ...lead } = parsed.data;
 
-  // Bots get a normal response, so they don't learn the field is a trap.
-  if (website) return NextResponse.json({ ok: true });
+  // The spam trap is hidden from people, so a value means a bot. Reject it.
+  if (website) return NextResponse.json({ error: "invalid" }, { status: 400 });
 
   if (!(await verifyTurnstile(turnstileToken, ip))) {
     return NextResponse.json({ error: "verification_failed" }, { status: 400 });

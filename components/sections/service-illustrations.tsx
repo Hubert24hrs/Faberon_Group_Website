@@ -357,7 +357,18 @@ function CloudIllustration() {
   );
 }
 
+// Every illustration shows made-up figures and names, so each carries a "sample" tag,
+// in the same style as the label on the home page agent panel.
 export function ServiceIllustration({ slug }: { slug: ServiceSlug }) {
+  return (
+    <div data-sample="true">
+      <p className="mb-2 text-right font-mono text-xs text-subtle">sample</p>
+      <Illustration slug={slug} />
+    </div>
+  );
+}
+
+function Illustration({ slug }: { slug: ServiceSlug }) {
   switch (slug) {
     case "custom-saas":
       return <SaasIllustration />;
