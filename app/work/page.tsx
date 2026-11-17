@@ -5,10 +5,11 @@ import { FinalCta } from "@/components/sections/final-cta";
 import { PageHeader } from "@/components/ui/page-header";
 import { caseStudies } from "@/content/case-studies";
 import { features } from "@/lib/site";
+import { company } from "@/config/company";
 
 export const metadata: Metadata = {
   title: "Work",
-  description: "Selected projects from Faberon Group.",
+  description: `Selected projects from ${company.shortName}.`,
   alternates: { canonical: "/work" },
 };
 

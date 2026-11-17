@@ -1,3 +1,4 @@
+import { company } from "@/config/company";
 import { leaders } from "@/content/leadership";
 import type { Service } from "@/content/services";
 import { site } from "@/lib/site";
@@ -48,6 +49,18 @@ export function organizationJsonLd() {
           },
         }
       : {}),
+    // Registration details appear only once they are set in config/company.ts.
+    ...(company.rcNumber
+      ? {
+          identifier: {
+            "@type": "PropertyValue",
+            propertyID: "CAC RC number",
+            value: company.rcNumber,
+          },
+        }
+      : {}),
+    ...(company.dunsNumber ? { duns: company.dunsNumber } : {}),
+    ...(company.incorporationDate ? { foundingDate: company.incorporationDate } : {}),
     ...(site.socials.length > 0 ? { sameAs: site.socials.map((social) => social.href) } : {}),
   };
 }

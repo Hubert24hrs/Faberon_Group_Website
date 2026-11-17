@@ -10,6 +10,7 @@ import { values } from "@/content/company";
 import { aboutFaqs } from "@/content/faqs";
 import { services } from "@/content/services";
 import { site } from "@/lib/site";
+import { company } from "@/config/company";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -116,7 +117,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <FaqSection faqs={aboutFaqs} title="About Faberon Group" />
+      <FaqSection faqs={aboutFaqs} title={`About ${company.shortName}`} />
 
       <FinalCta title="Talk to the people who'll build it" />
     </>

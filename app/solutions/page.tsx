@@ -8,11 +8,11 @@ import { audiences } from "@/content/company";
 import { solutionsFaqs } from "@/content/faqs";
 import { getService } from "@/content/services";
 import { anchorId } from "@/components/layout/site-nav";
+import { company } from "@/config/company";
 
 export const metadata: Metadata = {
   title: "Solutions",
-  description:
-    "How Faberon Group works with corporations, organisations, brands and individuals on software and AI.",
+  description: `How ${company.shortName} works with corporations, organisations, brands and individuals on software and AI.`,
   alternates: { canonical: "/solutions" },
 };
 

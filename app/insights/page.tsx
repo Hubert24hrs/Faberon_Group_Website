@@ -4,10 +4,11 @@ import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/ui/page-header";
 import { insights } from "@/content/insights";
 import { features } from "@/lib/site";
+import { company } from "@/config/company";
 
 export const metadata: Metadata = {
   title: "Insights",
-  description: "Writing from Faberon Group on software and AI.",
+  description: `Writing from ${company.shortName} on software and AI.`,
   alternates: { canonical: "/insights" },
 };
 

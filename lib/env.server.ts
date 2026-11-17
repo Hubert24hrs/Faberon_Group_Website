@@ -6,7 +6,7 @@ const optional = <T extends z.ZodType>(schema: T) =>
 const serverSchema = z.object({
   RESEND_API_KEY: optional(z.string()),
   CONTACT_TO_EMAIL: optional(z.email()),
-  // May include a display name, e.g. "Faberon Group <info@faberongroups.com>".
+  // May include a display name, e.g. "Company <hello@example.com>".
   CONTACT_FROM_EMAIL: optional(z.string()),
   SLACK_WEBHOOK_URL: optional(z.url({ protocol: /^https$/ })),
   CRM_WEBHOOK_URL: optional(z.url({ protocol: /^https$/ })),
