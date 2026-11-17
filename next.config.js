@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 
+// next.config.js is CommonJS, so the shared rule builder is loaded with require.
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const { buildCanonicalRedirects } = require("./lib/canonical-redirects.js");
+
 const isDev = process.env.NODE_ENV !== "production";
 
 // Next.js injects inline bootstrap scripts, and the theme script runs inline
@@ -31,17 +35,34 @@ const securityHeaders = [
   { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
 ];
 
-// A noindex header rather than a robots.txt block, because crawlers must be
-// able to fetch a page to see the instruction.
-const indexingHeaders =
-  process.env.SITE_LAUNCHED === "true" ? [] : [{ key: "X-Robots-Tag", value: "noindex, nofollow" }];
+// Production is indexable. On Vercel, preview deployments are not: Vercel adds its own
+// X-Robots-Tag: noindex to them, and robots.txt disallows everything outside production.
+// Production pages never send noindex.
+
+// The canonical origin, resolved the same way as lib/env.ts (read at build time).
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : undefined);
 
 const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   turbopack: { root: __dirname },
   async headers() {
-    return [{ source: "/:path*", headers: [...securityHeaders, ...indexingHeaders] }];
+    return [{ source: "/:path*", headers: securityHeaders }];
+  },
+  async redirects() {
+    return [
+      { source: "/data-deletion", destination: "/delete-account", permanent: true },
+      // Legacy hosts to the canonical origin, only when CANONICAL_REDIRECT_ENABLED is "true".
+      ...buildCanonicalRedirects({
+        enabled: process.env.CANONICAL_REDIRECT_ENABLED,
+        legacyHosts: process.env.LEGACY_HOSTS,
+        siteUrl,
+      }),
+    ];
   },
 };
 
