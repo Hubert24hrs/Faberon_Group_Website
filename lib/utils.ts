@@ -34,6 +34,26 @@ export function backToTopIfCurrent(
     ? "auto"
     : "smooth";
   // Just after the click, so a menu that is closing has released its scroll lock first.
-  window.setTimeout(() => window.scrollTo({ top: 0, behavior }), 0);
+  window.setTimeout(() => scrollToTop(behavior), 0);
   return true;
+}
+
+/**
+ * Scroll to the very top. Mobile browsers can cut a smooth scroll short, for example when
+ * the address bar slides back in, so once scrolling stops the rest is done instantly.
+ */
+function scrollToTop(behavior: "auto" | "smooth") {
+  window.scrollTo({ top: 0, behavior });
+  if (behavior !== "smooth") return;
+
+  let settled = false;
+  const finish = () => {
+    if (settled) return;
+    settled = true;
+    window.removeEventListener("scrollend", finish);
+    if (window.scrollY > 1) window.scrollTo({ top: 0, behavior: "instant" });
+  };
+  window.addEventListener("scrollend", finish);
+  // Browsers without scrollend, or a scroll that never starts, still end at the top.
+  window.setTimeout(finish, 1500);
 }

@@ -187,7 +187,6 @@ async function main() {
     const markers = await page.getByText("(required)").count();
     record(`${path}: required fields are marked`, markers > 0, `${markers} on the first step`);
   }
-
 }
 
 main()
