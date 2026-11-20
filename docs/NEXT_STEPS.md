@@ -8,15 +8,18 @@ To pick this up later, open the project in Claude Code and say: "Read docs/NEXT_
 
 ---
 
-## 1. When the CAC registration and documents arrive
+## 1. CAC registration
 
-1. Check the **exact** company name and registered address on the certificate against the website:
-   - Faberon Group Technologies Limited
-   - House 5, Gate 3, Zion Court Estate, Prince Samuel Adedoyin Street, Ikate, Lekki, Lagos, Nigeria
-     If anything differs by even one character, it must be corrected in `config/company.ts` (ask Claude to do it).
-2. Add the RC number: in Vercel, **Project → Settings → Environment Variables**, add `NEXT_PUBLIC_COMPANY_RC_NUMBER` with the number (digits only), then redeploy. It appears in the footer, About, Contact, Terms, Privacy and the search data.
-3. Request a **D-U-N-S number** using Apple's free lookup: https://developer.apple.com/enroll/duns-lookup/. Use the same name and address as the certificate. Keep the CAC documents ready; Dun & Bradstreet may call. Allow up to 30 days.
-4. When the D-U-N-S number arrives, ask Claude to add it to `config/company.ts`.
+Done (20 November 2026):
+
+- The website now matches the CAC status report: FABERON GROUP TECHNOLOGIES LIMITED, **RC 10021233**, private company limited by shares, registered office **House 5, Gate3, Zion Court Estate, Prince Samuel Adedoyin Street, Ikate, Ikate, Lagos State, Nigeria**.
+- The RC number is set in Vercel (`NEXT_PUBLIC_COMPANY_RC_NUMBER=10021233`).
+
+Still to do:
+
+1. **Fix the email on the CAC record.** The status report shows `info@faberongroup.com` (missing "s"). faberongroup.com belongs to someone else, so ask CAC to update the company email to **info@faberongroups.com** (a change of particulars on the CAC portal, or through your accredited agent).
+2. Request a **D-U-N-S number** using Apple's free lookup: https://developer.apple.com/enroll/duns-lookup/. Enter exactly: legal name FABERON GROUP TECHNOLOGIES LIMITED; address House 5, Gate3, Zion Court Estate, Prince Samuel Adedoyin Street, Ikate, Lagos State, Nigeria; email info@faberongroups.com; phone +234 703 028 8378. Keep the CAC documents ready; Dun & Bradstreet may call. Allow up to 30 days.
+3. When the D-U-N-S number arrives, ask Claude to add it to `config/company.ts`.
 
 ## 2. Domain and website: done (20 November 2026)
 

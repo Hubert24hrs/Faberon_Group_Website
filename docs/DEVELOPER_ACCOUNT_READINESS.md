@@ -97,13 +97,15 @@ The contact, demo, support and deletion forms send email through Resend. Until t
 
 Reviewers compare these documents. **Every entry must match exactly, letter for letter, including punctuation.** Fill in each cell from the document itself.
 
-| Item               | CAC certificate | Dun & Bradstreet record | Website                                                                                         | Apple form | Google form |
-| ------------------ | --------------- | ----------------------- | ----------------------------------------------------------------------------------------------- | ---------- | ----------- |
-| Legal name         |                 |                         | Faberon Group Technologies Limited                                                              |            |             |
-| Registered address |                 |                         | House 5, Gate 3, Zion Court Estate, Prince Samuel Adedoyin Street, Ikate, Lekki, Lagos, Nigeria |            |             |
-| Phone              |                 |                         | +234 703 028 8378                                                                               |            |             |
-| Website            |                 |                         | https://faberongroups.com (after stage 3)                                                       |            |             |
-| Email              |                 |                         | info@faberongroups.com                                                                          |            |             |
+| Item               | CAC record                                                                                           | Dun & Bradstreet record | Website                                                                                              | Apple form | Google form |
+| ------------------ | ---------------------------------------------------------------------------------------------------- | ----------------------- | ---------------------------------------------------------------------------------------------------- | ---------- | ----------- |
+| Legal name         | FABERON GROUP TECHNOLOGIES LIMITED                                                                   |                         | Faberon Group Technologies Limited                                                                   |            |             |
+| RC number          | Done: RC 10021233 is set in Vercel and shown on the site.                                            |
+| Company type       | Private company limited by shares                                                                    |                         | Private company limited by shares                                                                    |            |             |
+| Registered address | HOUSE 5, GATE3, ZION COURT ESTATE, PRINCE SAMUEL ADEDOYIN STREET, IKATE, IKATE, LAGOS STATE, NIGERIA |                         | House 5, Gate3, Zion Court Estate, Prince Samuel Adedoyin Street, Ikate, Ikate, Lagos State, Nigeria |            |             |
+| Phone              |                                                                                                      |                         | +234 703 028 8378                                                                                    |            |             |
+| Website            |                                                                                                      |                         | https://faberongroups.com                                                                            |            |             |
+| Email              | info@faberongroup.com (typo: missing "s"; get CAC to correct it)                                     |                         | info@faberongroups.com                                                                               |            |             |
 
 If anything on the website differs from the CAC certificate, change `config/company.ts` and redeploy, rather than changing what you type into the forms.
 

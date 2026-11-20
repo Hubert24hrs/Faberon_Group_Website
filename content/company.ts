@@ -195,8 +195,7 @@ export const faqs = [
   },
   {
     question: "Where are you based?",
-    answer:
-      "Our office is in Lekki, Lagos, Nigeria, and we work with clients globally. Consultations and project communication happen online or in person.",
+    answer: `Our office is in ${company.registeredAddress.locality}, ${company.registeredAddress.region}, ${company.registeredAddress.country}, and we work with clients globally. Consultations and project communication happen online or in person.`,
   },
   {
     question: "Do you support the work after launch?",
