@@ -1,3 +1,4 @@
+import { company } from "@/config/company";
 import { formatAddress, site, telHref } from "@/lib/site";
 
 // The registered company details app store and D-U-N-S reviewers look for.
@@ -6,7 +7,8 @@ export function CompanyDetails() {
   const rows = [
     { label: "Registered name", value: site.legalName },
     ...(site.registrationNumber ? [{ label: "RC number", value: site.registrationNumber }] : []),
-    { label: "Office address", value: formatAddress(site.contact.address) },
+    { label: "Company type", value: company.companyType },
+    { label: "Registered office", value: formatAddress(site.contact.address) },
     ...(email ? [{ label: "Email", value: email, href: `mailto:${email}` }] : []),
     ...(phone ? [{ label: "Phone", value: phone, href: telHref(phone) }] : []),
     ...(whatsapp

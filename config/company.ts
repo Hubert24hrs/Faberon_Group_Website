@@ -10,6 +10,8 @@ export type Attribution = "company" | "founder";
 export type CompanyConfig = {
   legalName: string;
   shortName: string;
+  /** As on the CAC record, e.g. "Private company limited by shares". */
+  companyType: string;
   /** The developer name on the App Store and Google Play listings. */
   storeDeveloperName: string;
   /** CAC registration number, e.g. "1234567". Null hides it everywhere. */
@@ -40,9 +42,9 @@ export type CompanyConfig = {
 const legalName = "Faberon Group Technologies Limited";
 
 const address = {
-  street: "House 5, Gate 3, Zion Court Estate, Prince Samuel Adedoyin Street, Ikate",
-  locality: "Lekki",
-  region: "Lagos",
+  street: "House 5, Gate3, Zion Court Estate, Prince Samuel Adedoyin Street, Ikate",
+  locality: "Ikate",
+  region: "Lagos State",
   country: "Nigeria",
   countryCode: "NG",
 };
@@ -55,12 +57,15 @@ const fromEnv = (value: string | undefined) => (value && value.trim() ? value.tr
 export const company: CompanyConfig = {
   legalName,
   shortName: "Faberon Group",
+  companyType: "Private company limited by shares",
   // The owner confirmed the store listings will use the legal name.
   storeDeveloperName: legalName,
   rcNumber: fromEnv(process.env.NEXT_PUBLIC_COMPANY_RC_NUMBER),
   dunsNumber: null,
   incorporationDate: null,
-  // The owner confirmed this matches the CAC certificate exactly.
+  // Matches the CAC status report letter for letter (only the capitals differ):
+  // "HOUSE 5, GATE3, ZION COURT ESTATE, PRINCE SAMUEL ADEDOYIN STREET, IKATE, IKATE,
+  // LAGOS STATE, NIGERIA". Keep it identical to the CAC and D-U-N-S records.
   registeredAddress: {
     ...address,
     formatted: `${address.street}, ${address.locality}, ${address.region}, ${address.country}`,

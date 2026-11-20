@@ -37,16 +37,14 @@ export const contactFaqs: Faq[] = [
   },
   {
     question: "Can we meet in person?",
-    answer:
-      "Our office is in Lekki, Lagos. Most consultations happen online, and we can arrange to meet in person.",
+    answer: `Our office is in ${company.registeredAddress.locality}, ${company.registeredAddress.region}. Most consultations happen online, and we can arrange to meet in person.`,
   },
 ];
 
 export const aboutFaqs: Faq[] = [
   {
     question: `Where is ${company.shortName} based?`,
-    answer:
-      "Our office is in Ikate, Lekki, Lagos, Nigeria. We work with clients globally, online and across time zones.",
+    answer: `Our office is in ${company.registeredAddress.locality}, ${company.registeredAddress.region}, ${company.registeredAddress.country}. We work with clients globally, online and across time zones.`,
   },
   {
     question: "Who leads the company?",
