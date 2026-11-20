@@ -12,6 +12,8 @@ To check the live site at any stage, open a terminal in the project folder and r
 
 ## 1. Moving the website to faberongroups.com
 
+**Status (20 November 2026): stages 1 to 3 are complete.** The site runs at https://faberongroups.com; the readiness check with `--legacy i-dokoai.vercel.app` passed 30 of 30. Zoho Mail is set up for info@faberongroups.com.
+
 ### Stage 1: now, before the domain exists (done)
 
 The site runs at https://i-dokoai.vercel.app and is consistent with itself there.
