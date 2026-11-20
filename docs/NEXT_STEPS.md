@@ -1,8 +1,8 @@
 # What to do next
 
-Status on 17 November 2026: the website is finished for now and live at https://i-dokoai.vercel.app. Everything is on GitHub (`Hubert24hrs/Faberon_Group_Website`, branch `main`).
+Status on 20 November 2026: the website is live at **https://faberongroups.com** (the old i-dokoai.vercel.app address and www.faberongroups.com forward to it), and **info@faberongroups.com** works in Zoho Mail. Everything is on GitHub (`Hubert24hrs/Faberon_Group_Website`, branch `main`).
 
-The work left waits on three things from you: the **CAC documents**, the **domain** and the **company email**. Do the steps below in order as each one becomes available. The detailed version of every step is in [DEVELOPER_ACCOUNT_READINESS.md](./DEVELOPER_ACCOUNT_READINESS.md).
+What's left mainly waits on the **CAC documents**. Do the steps below in order. The detailed version of every step is in [DEVELOPER_ACCOUNT_READINESS.md](./DEVELOPER_ACCOUNT_READINESS.md).
 
 To pick this up later, open the project in Claude Code and say: "Read docs/NEXT_STEPS.md and continue from step N."
 
@@ -18,28 +18,33 @@ To pick this up later, open the project in Claude Code and say: "Read docs/NEXT_
 3. Request a **D-U-N-S number** using Apple's free lookup: https://developer.apple.com/enroll/duns-lookup/. Use the same name and address as the certificate. Keep the CAC documents ready; Dun & Bradstreet may call. Allow up to 30 days.
 4. When the D-U-N-S number arrives, ask Claude to add it to `config/company.ts`.
 
-## 2. When you buy faberongroups.com
+## 2. Domain and website: done (20 November 2026)
 
-1. Buy the domain.
-2. In Vercel, **Project → Settings → Domains**, add `faberongroups.com` (and accept the `www` redirect Vercel offers). Follow Vercel's DNS instructions at your registrar.
-3. When https://faberongroups.com opens the site with a padlock, set `NEXT_PUBLIC_SITE_URL` = `https://faberongroups.com` in Vercel and redeploy.
-4. Run the check (or ask Claude to): `npm run check:readiness -- https://faberongroups.com`
-5. When it says "0 failed", set `CANONICAL_REDIRECT_ENABLED` = `true` and `LEGACY_HOSTS` = `i-dokoai.vercel.app`, redeploy, and run:
-   `npm run check:readiness -- https://faberongroups.com --legacy i-dokoai.vercel.app`
+- faberongroups.com is registered at Namecheap. DNS stays at Namecheap: `A @` and `A www` point to Vercel (`76.76.21.21`).
+- Vercel serves the site with HTTPS. In Vercel production: `NEXT_PUBLIC_SITE_URL=https://faberongroups.com`, `CANONICAL_REDIRECT_ENABLED=true`, `LEGACY_HOSTS=i-dokoai.vercel.app,www.faberongroups.com`.
+- Readiness check: `npm run check:readiness -- https://faberongroups.com --legacy i-dokoai.vercel.app` passed 30 of 30.
 
-## 3. When you set up the company email
+## 3. Company email
 
-1. Create the mailbox **info@faberongroups.com** (Google Workspace or Zoho Mail) and add the mail (MX) records they give you at your registrar. Send it a test email.
-2. Create a mailbox in your own name, e.g. **hubert@faberongroups.com**, for your Apple Account.
-3. Optional: aliases **support@** and **privacy@** that deliver to info@.
-4. So the website's forms send email: create a Resend account, add the domain, add the DNS records Resend shows, wait for "verified", then set in Vercel and redeploy:
+Done (20 November 2026):
+
+- Zoho Mail, Forever Free plan. The domain is verified and **info@faberongroups.com** is created. Sign in at https://mail.zoho.com.
+- In Namecheap: Mail Settings is **Custom MX** (`mx.zoho.com` 10, `mx2.zoho.com` 20, `mx3.zoho.com` 50), plus SPF `v=spf1 include:zohomail.com ~all` and DKIM on `zmail._domainkey`. Zoho shows all records verified.
+- The Forever Free plan has no IMAP or POP: use the Zoho Mail website or the Zoho Mail app on your phone.
+
+Still to do:
+
+1. Send a test email to info@faberongroups.com from another account, and reply to it, to confirm both directions work.
+2. Recommended: in Zoho Mail admin, add a user in your own name, e.g. **hubert@faberongroups.com**, for your Apple Account (the free plan allows 5 users).
+3. Optional: aliases **support@** and **privacy@** on the info@ user.
+4. So the website's forms send email: create a Resend account, add `faberongroups.com`, and add the DNS records Resend shows in Namecheap. Resend uses its own records on a `send` subdomain, so they don't clash with Zoho. When Resend says "verified", set in Vercel and redeploy:
    - `RESEND_API_KEY` (from Resend)
    - `EMAIL_FROM` = `Faberon Group <no-reply@faberongroups.com>`
    - `EMAIL_REPLY_TO` = `info@faberongroups.com`
    - `LEADS_NOTIFY_EMAIL` = `info@faberongroups.com`
 5. Test: send a request from https://faberongroups.com/support and check that both emails arrive.
 
-## 4. When steps 1 to 3 are done: enroll
+## 4. When step 1 is done (and info@ is tested): enroll
 
 Re-read the official pages first, because the rules change.
 
