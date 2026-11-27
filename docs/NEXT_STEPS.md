@@ -18,7 +18,7 @@ Done (20 November 2026):
 Still to do:
 
 1. **Fix the email on the CAC record.** The status report shows `info@faberongroup.com` (missing "s"). faberongroup.com belongs to someone else, so ask CAC to update the company email to **info@faberongroups.com** (a change of particulars on the CAC portal, or through your accredited agent).
-2. **D-U-N-S number: done (27 November 2026).** The number is **321508614**, and it's set in `config/company.ts`, so it shows in the company details and structured data. Dun & Bradstreet's record reads: FABERON GROUP TECHNOLOGIES LIMITED, HOUSE 5, GATE3, PRINCE SAMUEL ADEDOYIN STREET, Ikate, Lagos, NG. It leaves out "Zion Court Estate", so if Apple or Google reject the address, ask D&B (case #35032168) to add the estate name.
+2. **D-U-N-S number: done (27 November 2026).** The number is **321508614**, and it's set in `config/company.ts`, so it shows in the company details and structured data. Dun & Bradstreet's record reads: FABERON GROUP TECHNOLOGIES LIMITED, address line 1 "HOUSE 5, GATE3, PRINCE SAMUEL ADEDOYIN STREET, Ikate", address line 2 "ZION COURT ESTATE", Lagos, NG.
 
 ## 2. Domain and website: done (20 November 2026)
 
@@ -50,8 +50,7 @@ Still to do:
 
 Re-read the official pages first, because the rules change.
 
-- **Apple Developer Program:** https://developer.apple.com/programs/enroll/
-  Website: https://faberongroups.com · Work email: your @faberongroups.com address · D-U-N-S 321508614.
+- **Apple Developer Program: submitted (27 November 2026), Enrollment ID C94242A9X6.** Company / Organization; work email info@faberongroups.com; phone +234 7030288378; D-U-N-S 321508614. Apple first verifies your authority to sign (it may phone you), then emails instructions to accept the Program License Agreement and pay the 99 USD yearly fee.
 - **Google Play Console (organisation):** https://support.google.com/googleplay/android-developer/answer/13628312
   Website: https://faberongroups.com · Organisation phone: +234 703 028 8378.
   Note: Google shows your legal name, D-U-N-S number, address, developer email and developer phone publicly.
