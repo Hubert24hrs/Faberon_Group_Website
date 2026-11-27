@@ -18,8 +18,7 @@ Done (20 November 2026):
 Still to do:
 
 1. **Fix the email on the CAC record.** The status report shows `info@faberongroup.com` (missing "s"). faberongroup.com belongs to someone else, so ask CAC to update the company email to **info@faberongroups.com** (a change of particulars on the CAC portal, or through your accredited agent).
-2. Request a **D-U-N-S number** using Apple's free lookup: https://developer.apple.com/enroll/duns-lookup/. Enter exactly: legal name FABERON GROUP TECHNOLOGIES LIMITED; address House 5, Gate3, Zion Court Estate, Prince Samuel Adedoyin Street, Ikate, Lagos State, Nigeria; email info@faberongroups.com; phone +234 703 028 8378. Keep the CAC documents ready; Dun & Bradstreet may call. Allow up to 30 days.
-3. When the D-U-N-S number arrives, ask Claude to add it to `config/company.ts`.
+2. **D-U-N-S number: done (27 November 2026).** The number is **321508614**, and it's set in `config/company.ts`, so it shows in the company details and structured data. Dun & Bradstreet's record reads: FABERON GROUP TECHNOLOGIES LIMITED, HOUSE 5, GATE3, PRINCE SAMUEL ADEDOYIN STREET, Ikate, Lagos, NG. It leaves out "Zion Court Estate", so if Apple or Google reject the address, ask D&B (case #35032168) to add the estate name.
 
 ## 2. Domain and website: done (20 November 2026)
 
@@ -52,7 +51,7 @@ Still to do:
 Re-read the official pages first, because the rules change.
 
 - **Apple Developer Program:** https://developer.apple.com/programs/enroll/
-  Website: https://faberongroups.com · Work email: your @faberongroups.com address · D-U-N-S from step 1.
+  Website: https://faberongroups.com · Work email: your @faberongroups.com address · D-U-N-S 321508614.
 - **Google Play Console (organisation):** https://support.google.com/googleplay/android-developer/answer/13628312
   Website: https://faberongroups.com · Organisation phone: +234 703 028 8378.
   Note: Google shows your legal name, D-U-N-S number, address, developer email and developer phone publicly.
