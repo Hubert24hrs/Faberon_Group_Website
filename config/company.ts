@@ -61,7 +61,8 @@ export const company: CompanyConfig = {
   // The owner confirmed the store listings will use the legal name.
   storeDeveloperName: legalName,
   rcNumber: fromEnv(process.env.NEXT_PUBLIC_COMPANY_RC_NUMBER),
-  dunsNumber: null,
+  // Issued by Dun & Bradstreet; confirmed through Apple's D-U-N-S lookup on 27 November 2026.
+  dunsNumber: "321508614",
   incorporationDate: null,
   // Matches the CAC status report letter for letter (only the capitals differ):
   // "HOUSE 5, GATE3, ZION COURT ESTATE, PRINCE SAMUEL ADEDOYIN STREET, IKATE, IKATE,

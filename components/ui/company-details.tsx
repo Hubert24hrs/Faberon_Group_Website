@@ -8,6 +8,7 @@ export function CompanyDetails() {
     { label: "Registered name", value: site.legalName },
     ...(site.registrationNumber ? [{ label: "RC number", value: site.registrationNumber }] : []),
     { label: "Company type", value: company.companyType },
+    ...(company.dunsNumber ? [{ label: "D-U-N-S number", value: company.dunsNumber }] : []),
     { label: "Registered office", value: formatAddress(site.contact.address) },
     ...(email ? [{ label: "Email", value: email, href: `mailto:${email}` }] : []),
     ...(phone ? [{ label: "Phone", value: phone, href: telHref(phone) }] : []),
